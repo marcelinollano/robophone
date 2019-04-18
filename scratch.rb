@@ -9,12 +9,15 @@ $stdout.sync = true
 
 account_sid  = ENV['TWILIO_ACCOUNT_SID']
 auth_token   = ENV['TWILIO_AUTH_TOKEN']
-ringing_secs = 5
-calling_secs = 15
+ringing_secs = 10
+calling_secs = 25
 
-# 5 -> 7
-# 10 -> 13
-# 15 -> ?
+# 5 sec err
+# 5  -> 10
+# 10 -> 17
+# 15 -> 21
+# 20 -> 25
+# 25 -> 31
 
 @client = Twilio::REST::Client.new(account_sid, auth_token)
 
@@ -33,26 +36,27 @@ def halt_call(call)
   call.update(status: 'completed')
 end
 
-system('clear') && puts("⚡️ Starting the call")
+puts("⚡️ Starting the call")
 
 loop do
   call = find_call(request)
-  break true if (call.status == 'ringing')
+  break(true) if (call.status == 'ringing')
 end
 
-system('clear') && puts("📞 Ringing…")
+puts("📞 Ringing…")
 ringing_time = Time.now.utc + ringing_secs
 
 picked = loop do
   call = find_call(request)
-  break true  if (call.status == 'in-progress')
-  break false if (ringing_time.utc < Time.now.utc)
+  break(true)  if (call.status == 'in-progress')
+  if (ringing_time.utc < Time.now.utc)
+    halt_call(call)
+    break(false)
+  end
 end
 
 if picked
-  calling_time = Time.now.utc + calling_secs
-  index        = 0
-  emoji        = ["🌑", "🌒", "🌓", "🌔", "🌕", "🌖", "🌗", "🌘", "🌑"]
+  calling_time = Time.now.utc + (calling_secs)
 
   loop do
     call = find_call(request.sid)
@@ -69,15 +73,10 @@ if picked
       break
     end
 
-    system('clear')
-    print(emoji[index] + " Time left: #{(calling_time - now).round}")
-    puts
-    index = index + 1
-    index = 0 if index > 8
+    puts("📞 Time left: #{(calling_time - now).round}")
   end
 else
   puts("🤐 The call was not picked")
-  halt_call(call)
 end
 
 if picked
@@ -91,7 +90,7 @@ end
 # Elvis left the building
 # -----------------------
 #
-# system('clear')
+# puts
 # puts('💥 Hanging up NOW!')
 # puts("🕓 Duration: #{call.duration} seconds")
 #
@@ -119,7 +118,7 @@ end
 # debounce = 0
 # progress = ["🌑", "🌒", "🌓", "🌔", "🌕", "🌖", "🌗", "🌘", "🌑"]
 # while (end_time.utc > Time.now.utc) do
-#   system('clear')
+#   puts
 #   print(progress[index] + ' calling...')
 #   debounce = debounce + 1
 #   if debounce > 60
@@ -128,8 +127,8 @@ end
 #     debounce = 0
 #   end
 # end
-# system('clear') && print(' Call finished.')
-# sleep(0.8) && system('clear')
+# puts && print(' Call finished.')
+# sleep(0.8) && puts
 
 # Get a call by sid
 # -----------------
