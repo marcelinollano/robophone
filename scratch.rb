@@ -9,8 +9,8 @@ $stdout.sync = true
 
 account_sid  = ENV['TWILIO_ACCOUNT_SID']
 auth_token   = ENV['TWILIO_AUTH_TOKEN']
-ringing_secs = 10
-calling_secs = 25
+ring_secs    = 10
+speak_secs   = 25
 
 # 5 sec err
 # 5  -> 10
@@ -28,60 +28,75 @@ request = @client.calls.create(
   from: '+34646446543'
 )
 
-def find_call(request)
-  @client.calls.list.first {|call| call.sid == request.sid}
+def query(request)
+  call = @client.calls.list.first {|call| call.sid == request.sid}
+  return(call)
 end
 
-def halt_call(call)
-  call.update(status: 'completed')
-end
-
-puts("⚡️ Starting the call")
-
-loop do
-  call = find_call(request)
-  break(true) if (call.status == 'ringing')
-end
-
-puts("📞 Ringing…")
-ringing_time = Time.now.utc + ringing_secs
-
-picked = loop do
-  call = find_call(request)
-  break(true)  if (call.status == 'in-progress')
-  if (ringing_time.utc < Time.now.utc)
-    halt_call(call)
-    break(false)
+def connect(request)
+  puts("⚡️ Connecting…")
+  response = loop do
+    call = query(request)
+    if (call.status == 'ringing')
+      break(true)
+    end
   end
+  return(response)
 end
 
-if picked
-  calling_time = Time.now.utc + (calling_secs)
-
-  loop do
-    call = find_call(request.sid)
+def ring(request, secs)
+  puts("📞 Ringing…")
+  time = Time.now.utc + secs
+  response = loop do
+    call = query(request)
     now  = Time.now.utc
-
-    if (call.status == 'completed')
-      puts("😀 The call succeed!")
-      break
+    if (call.status == 'in-progress')
+      puts("🤭 The was picked up")
+      break(true)
     end
-
-    if (calling_time < now)
-      puts("🤮 The call overrun")
-      halt_call(call)
-      break
+    if (time < now)
+      puts("🤐 The call was not picked")
+      halt(call)
+      break(false)
     end
-
-    puts("📞 Time left: #{(calling_time - now).round}")
   end
-else
-  puts("🤐 The call was not picked")
+  return(response)
 end
 
-if picked
-  call = find_call(request.sid)
+def speak(request, secs)
+  time = Time.now.utc + secs
+  response = loop do
+    call = query(request)
+    now  = Time.now.utc
+    if (call.status == 'completed')
+      puts("😀 The call succeed")
+      break(true)
+    end
+    if (time < now)
+      puts("🤮 The call overrun")
+      halt(call)
+      break(false)
+    end
+    puts("📞 Runtime: #{secs - (time - now).round}/#{secs} secs")
+  end
+  return(response)
+end
+
+def report(request)
+  call = query(request)
   puts("🕓 Duration: #{call.duration} seconds")
+end
+
+def halt(call)
+  response = call.update(status: 'completed') ? true : false
+  return(response)
+end
+
+if connect(request)
+  if ring(request, ring_secs)
+    speak(request, speak_secs)
+    report(request)
+  end
 end
 
 # Snipppets
