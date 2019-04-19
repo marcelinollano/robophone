@@ -1,0 +1,6 @@
+<% for contact in @contacts %>
+<p>
+  <%= contact.name %> (<%= contact.phone %>)
+  <a href="/contact/<%= contact.id %>">Delete</a>
+</p>
+<% end %>
