@@ -85,6 +85,7 @@ class App < Sinatra::Base
 
   get('/stories/new') do
     auth_basic!
+    @from  = params[:from]
     @story = Story.new
     erb(:'stories/new')
   end
