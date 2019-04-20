@@ -107,6 +107,7 @@ class App < Sinatra::Base
 
   get('/stories/:id/edit') do
     auth_basic!
+    @from  = params[:from]
     @story = Story.first(:id => params[:id])
     erb(:'stories/edit')
   end
@@ -123,7 +124,7 @@ class App < Sinatra::Base
         :in_progress => params[:in_progress],
         :size        => params[:size]
       })
-      redirect('/stories')
+      redirect(params[:from])
     rescue
       not_found
     end

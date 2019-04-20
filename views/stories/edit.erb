@@ -1,5 +1,5 @@
 <main>
-  <form method="post" action="/stories/<%= @story.id %>">
+  <form method="post" action="/stories/<%= @story.id %>?from=<%= @from %>">
     <h1>Edit story</h1>
     <input type="hidden" name="_method" value="put">
     <%= erb(:'stories/form', :locals => {:story => @story}) %>

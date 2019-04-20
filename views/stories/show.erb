@@ -1,4 +1,12 @@
+<header>
+  <%= erb(:'nav') %>
+  <a href="/stories/<%= @story.id %>/call" class="primary">Start calling</a>
+</header>
+
 <main>
-  <h1><%= @story.name %></h1>
+  <h1>
+    <%= @story.name %>
+    <a href="/stories/<%= @story.id %>/edit?from=/stories/<%= @story.id %>">Edit</a>
+  </h1>
   <p><%= @story.beginning %></p>
 </main>
