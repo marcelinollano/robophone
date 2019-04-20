@@ -14,7 +14,16 @@ class App < Sinatra::Base
   post('/contact/:id/?') do
   end
 
-  delete('/contact/:id/?') do
+  delete('/contact/?') do
+    auth_token!(params[:token])
+    begin
+      contact = Contact.find(:permalink => params[:permalink])
+      contact.destroy
+      headers("Access-Control-Allow-Origin" => "*")
+      'true'
+    rescue
+      not_found
+    end
   end
 
   get('/story/:permalink/?') do

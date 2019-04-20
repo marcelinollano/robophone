@@ -1,0 +1,15 @@
+.story-delete {
+  color: #000;
+  display: block;
+  float: left;
+  text-align: right;
+  width: 20%;
+}
+
+.is-marked {
+  opacity: 0;
+}
+
+.is-deleted {
+  display: none;
+}

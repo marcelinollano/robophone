@@ -13,7 +13,7 @@ DB.create_table?(:contacts) do
   primary_key :id
   String   :name
   String   :phone
-  String   :calls
+  String   :pings
   DateTime :created_at
   DateTime :updated_at
   index    :number, :unique => true
@@ -36,8 +36,11 @@ end
 DB.create_table?(:stories) do
   primary_key :id
   String   :name
-  String   :starter
   String   :permalink
+  String   :beginning
+  Integer  :time_queued
+  Integer  :time_ringing
+  Integer  :time_in_progress
   DateTime :created_at
   DateTime :updated_at
   index    :permalink, :unique => true
@@ -55,13 +58,13 @@ class Story < Sequel::Model
   end
 end
 
-
 # Posts
 
 DB.create_table?(:posts) do
   primary_key :id
   foreign_key :story_id,   :stories
   foreign_key :contact_id, :contacts
+  String   :status
   String   :audio
   String   :transcript
   DateTime :created_at
@@ -83,7 +86,10 @@ end
 
 # Seeds
 
-# services = [{:permalink => 'https://instagram.com', :name => 'Instagram'}]
+# services = [{
+#   :permalink => 'https://instagram.com',
+#   :name => 'Instagram'
+# }]
 #
 # services.each do |service|
 #   Service.update_or_create({
