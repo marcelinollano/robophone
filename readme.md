@@ -1,9 +1,9 @@
 # Broken phone
 
 - [x] Limit calls to 2 min
-- [ ] Transcribe a call
-- [ ] Wait between calls
-- [ ] Save audios to location
+- [ ] Scaffolding
+- [ ] Save the call
+- [ ] Perform a run
 
 ## Resources
 

@@ -1,3 +1,13 @@
-<% for story in @stories %>
-<p><a href="<%= story.permalink %>"><%= story.name %></a></p>
-<% end %>
+<%= erb(:story_form) %>
+
+<div class="stories">
+  <% if @stories.any? %>
+    <% for story in @stories %>
+      <p>
+        <a href="/story/<%= story.id %>"><%= story.name %></a>
+      </p>
+    <% end %>
+  <% else %>
+    <p>No stories yet.</p>
+  <% end %>
+</div>

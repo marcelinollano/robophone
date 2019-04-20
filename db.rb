@@ -13,10 +13,10 @@ DB.create_table?(:contacts) do
   primary_key :id
   String   :name
   String   :phone
-  String   :pings
+  Integer  :pings
   DateTime :created_at
   DateTime :updated_at
-  index    :number, :unique => true
+  index    :id, :unique => true
 end
 
 class Contact < Sequel::Model
@@ -26,8 +26,13 @@ class Contact < Sequel::Model
 
   def validate
     super
-    validates_presence([:name, :number])
-    validates_unique(:number)
+    validates_presence([:name, :phone])
+    validates_unique(:phone)
+  end
+
+  def before_create
+    super
+    self.pings ||= 0
   end
 end
 
@@ -43,7 +48,7 @@ DB.create_table?(:stories) do
   Integer  :time_in_progress
   DateTime :created_at
   DateTime :updated_at
-  index    :permalink, :unique => true
+  index    :id, :unique => true
 end
 
 class Story < Sequel::Model

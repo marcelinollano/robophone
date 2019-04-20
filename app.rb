@@ -7,17 +7,30 @@ require './db.rb'
 
 class App < Sinatra::Base
 
-  get('/contacts/?') do
+  get('/contacts') do
+    auth_basic!
+    @contacts = Contact.all
     erb :contacts
   end
 
-  post('/contact/:id/?') do
+  post('/contact/new') do
+    auth_basic!
+    begin
+      Contact.create(params)
+      redirect '/contacts'
+    rescue
+      bad_request
+    end
   end
 
-  delete('/contact/?') do
+  post('/contact/:id') do
+    auth_basic!
+  end
+
+  delete('/contact/:id') do
     auth_token!(params[:token])
     begin
-      contact = Contact.find(:permalink => params[:permalink])
+      contact = Contact.find(:id => params[:id])
       contact.destroy
       headers("Access-Control-Allow-Origin" => "*")
       'true'
@@ -26,12 +39,14 @@ class App < Sinatra::Base
     end
   end
 
-  get('/story/:permalink/?') do
+  get('/story/:permalink') do
+    auth_basic!
     erb :story
   end
 
-  get('/?') do
+  get('/') do
     auth_basic!
+    @stories = Story.all
     erb :stories
   end
 

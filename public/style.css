@@ -1,9 +1,72 @@
-.story-delete {
+/* style.css */
+
+html {
+  -webkit-text-size-adjust: none;
+  font-size: 62.5%;
+}
+
+body {
+  background-color: #fff;
   color: #000;
-  display: block;
-  float: left;
+  font-family: -apple-system, sans-serif;
+  margin: 0;
+  padding: 2rem 2rem;
+}
+
+p {
+  font-size: 1.8rem;
+  font-weight: 400;
+  margin: 2rem 0;
+  line-height: 2rem;
+}
+
+form {
+  background-color: #eee;
+  padding: 1rem 2rem;
+  margin-bottom: 3rem;
+}
+
+label {
+  display: inline-block;
+  width: 10rem;
+  font-weight: 500;
+}
+
+input {
+  font-size: 2rem;
+}
+
+input[type="submit"] {
+  font-size: 2rem;
+  background-color: #000;
+  border: none;
+  color: #fff;
+  padding: 1rem;
+}
+
+table {
+  width: 100%;
+}
+
+th,
+td {
+  font-size: 1.8rem;
+  font-weight: 400;
+  margin: 3rem 0;
+  line-height: 3rem;
+}
+
+th {
+  font-weight: bold;
+  text-align: left;
+}
+
+td:last-child {
   text-align: right;
-  width: 20%;
+}
+
+.delete {
+  color: #f00;
 }
 
 .is-marked {

@@ -1,10 +1,9 @@
-function deleteStory(url, callback) {
+// script.js
+
+function deleteItem(url, callback) {
+  console.log(url + "?token=" + envToken);
   var r = new XMLHttpRequest();
-  r.open(
-    "DELETE",
-    envUrl + "/story?token=" + envToken + "&permalink=" + permalink,
-    true
-  );
+  r.open("DELETE", url + "?token=" + envToken, true);
   r.onreadystatechange = function() {
     if (r.readyState != 4 || r.status != 200) return;
     callback(r.responseText);
@@ -12,18 +11,19 @@ function deleteStory(url, callback) {
   r.send();
 }
 
-var storysDeleteLinks = document.getElementsByClassName("story-delete");
-for (var i = storysDeleteLinks.length - 1; i >= 0; i--) {
-  storysDeleteLinks[i].addEventListener(
+var deleteLinks = document.getElementsByClassName("delete");
+
+for (var i = deleteLinks.length - 1; i >= 0; i--) {
+  deleteLinks[i].addEventListener(
     "click",
     function(e) {
       var link = this;
-      var url = link.href;
-      deleteStory(url, function(res) {
+      var url = this.href;
+      deleteItem(url, function(res) {
         if (res == "true") {
-          link.parentNode.classList.toggle("is-marked");
+          link.parentNode.parentNode.classList.toggle("is-marked");
           setTimeout(function() {
-            link.parentNode.classList.toggle("is-deleted");
+            link.parentNode.parentNode.classList.toggle("is-deleted");
           }, 500);
         }
       });
