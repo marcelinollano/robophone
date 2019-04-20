@@ -6,48 +6,124 @@ Dotenv.load
 require './db.rb'
 
 class App < Sinatra::Base
+  configure do
+    enable(:method_override)
+  end
+
+  helpers do
+    def active?(path='')
+      request.path_info == path ? 'active' : nil
+    end
+  end
+
+  # Contacts
 
   get('/contacts') do
     auth_basic!
+    @contact  = Contact.new
     @contacts = Contact.all
-    erb :contacts
+    erb(:'contacts/index')
   end
 
-  post('/contact/new') do
+  get('/contacts/:id/edit') do
+    auth_basic!
+    @contact = Contact.first(:id => params[:id])
+    erb(:'contacts/edit')
+  end
+
+  post('/contacts') do
     auth_basic!
     begin
       Contact.create(params)
-      redirect '/contacts'
+      redirect('/contacts')
     rescue
       bad_request
     end
   end
 
-  post('/contact/:id') do
+  put('/contacts/:id') do
     auth_basic!
-  end
-
-  delete('/contact/:id') do
-    auth_token!(params[:token])
     begin
-      contact = Contact.find(:id => params[:id])
-      contact.destroy
-      headers("Access-Control-Allow-Origin" => "*")
-      'true'
+      contact = Contact.first(:id => params[:id])
+      contact.update({
+        :name  => params[:name],
+        :phone => params[:phone],
+        :pings => params[:pings],
+      })
+      redirect('/contacts')
     rescue
       not_found
     end
   end
 
-  get('/story/:permalink') do
-    auth_basic!
-    erb :story
+  delete('/contacts/:id') do
+    auth_token!(params[:token])
+    begin
+      contact = Contact.find(:id => params[:id])
+      contact.destroy
+      headers("Access-Control-Allow-Origin" => "*")
+      return('true')
+    rescue
+      not_found
+    end
   end
+
+  # Stories
+
+  get('/stories') do
+    auth_basic!
+    @stories = Story.all
+    erb(:'stories/index')
+  end
+
+  post('/stories') do
+    auth_basic!
+    begin
+      Story.create(params)
+      redirect('/stories')
+    rescue
+      bad_request
+    end
+  end
+
+  get('/stories/:id') do
+    auth_basic!
+    erb(:'stories/show')
+  end
+
+  get('/stories/:id/edit') do
+    auth_basic!
+    erb(:'stories/edit')
+  end
+
+  put('/stories/:id') do
+    auth_basic!
+    begin
+      story = Story.first(:id => params[:id])
+      story.update(params)
+      redirect('/stories')
+    rescue
+      not_found
+    end
+  end
+
+  delete('/stories/:id') do
+    auth_token!(params[:token])
+    begin
+      story = Story.find(:id => params[:id])
+      story.destroy
+      headers("Access-Control-Allow-Origin" => "*")
+      return('true')
+    rescue
+      not_found
+    end
+  end
+
+  # Root
 
   get('/') do
     auth_basic!
-    @stories = Story.all
-    erb :stories
+    redirect('/stories')
   end
 
 private

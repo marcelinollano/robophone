@@ -1,4 +1,6 @@
-<%= erb(:contact_form) %>
+<form method="post" action="/contacts">
+  <%= erb(:'contacts/form', :locals => {:contact => @contact}) %>
+</form>
 
 <div class="contacts">
   <% if @contacts.any? %>
@@ -11,10 +13,17 @@
       </tr>
       <% for contact in @contacts %>
       <tr>
-        <td><a href="/contact/<%= contact.id %>"><%= contact.name %></a></td>
+        <td><%= contact.name %></td>
         <td><a href="tel:<%= contact.phone %>"><%= contact.phone %></a></td>
         <td><%= contact.pings %></td>
-        <td><a href="/contact/<%= contact.id %>" class="delete">Delete contact</a></td>
+        <td>
+          <menu>
+            <ul>
+              <li><a href="/contacts/<%= contact.id %>/edit">Edit</a></li>
+              <li><a href="/contacts/<%= contact.id %>" class="delete">Delete</a></li>
+            </ul>
+          </menu>
+        </td>
       </tr>
       <% end %>
     </table>

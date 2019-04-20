@@ -8,6 +8,12 @@
   <link rel="stylesheet" href="/style.css">
 </head>
 <body>
+  <nav>
+    <ul>
+      <li><a href="/stories" class="<%= active?('/stories') %>">Stories</a></li>
+      <li><a href="/contacts" class="<%= active?('/contacts') %>">Contacts</a></li>
+    </ul>
+  </nav>
   <%= yield %>
   <script src="/script.js" charset="utf-8"></script>
   <script>var envToken = '<%= ENV['TOKEN'] %>';</script>

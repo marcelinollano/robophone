@@ -1,0 +1,4 @@
+<form method="post" action="/contacts/<%= @contact.id %>">
+  <input type="hidden" name="_method" value="put">
+  <%= erb(:'contacts/form', :locals => {:contact => @contact}) %>
+</form>

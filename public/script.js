@@ -21,10 +21,10 @@ for (var i = deleteLinks.length - 1; i >= 0; i--) {
       var url = this.href;
       deleteItem(url, function(res) {
         if (res == "true") {
-          link.parentNode.parentNode.classList.toggle("is-marked");
+          link.closest("tr").classList.toggle("is-marked");
           setTimeout(function() {
-            link.parentNode.parentNode.classList.toggle("is-deleted");
-          }, 500);
+            link.closest("tr").classList.toggle("is-deleted");
+          }, 400);
         }
       });
       e.preventDefault();

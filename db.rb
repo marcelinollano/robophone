@@ -28,9 +28,13 @@ class Contact < Sequel::Model
     super
     validates_presence([:name, :phone])
     validates_unique(:phone)
+    validates_numeric(:pings)
+    if Phonelib.invalid_for_country?(self.phone, 'ES')
+      errors.add(:phone, 'invalid')
+    end
   end
 
-  def before_create
+  def before_validation
     super
     self.pings ||= 0
   end
