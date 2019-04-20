@@ -1,0 +1,6 @@
+<main>
+  <form method="post" action="/contacts">
+    <h1>New contact</h1>
+    <%= erb(:'contacts/form', :locals => {:contact => @contact}) %>
+  </form>
+</main>

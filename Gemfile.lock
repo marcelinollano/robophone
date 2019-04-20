@@ -1,7 +1,6 @@
 GEM
   remote: https://rubygems.org/
   specs:
-    babosa (1.0.2)
     dotenv (2.7.2)
     faraday (0.15.4)
       multipart-post (>= 1.2, < 3)
@@ -39,7 +38,6 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  babosa
   dotenv
   foreman
   phonelib

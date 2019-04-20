@@ -25,6 +25,12 @@ class App < Sinatra::Base
     erb(:'contacts/index')
   end
 
+  get('/contacts/new') do
+    auth_basic!
+    @contact  = Contact.new
+    erb(:'contacts/new')
+  end
+
   get('/contacts/:id/edit') do
     auth_basic!
     @contact = Contact.first(:id => params[:id])
@@ -48,7 +54,7 @@ class App < Sinatra::Base
       contact.update({
         :name  => params[:name],
         :phone => params[:phone],
-        :pings => params[:pings],
+        :rings => params[:rings],
       })
       redirect('/contacts')
     rescue
@@ -72,8 +78,15 @@ class App < Sinatra::Base
 
   get('/stories') do
     auth_basic!
+    @story = Story.new
     @stories = Story.all
     erb(:'stories/index')
+  end
+
+  get('/stories/new') do
+    auth_basic!
+    @story = Story.new
+    erb(:'stories/new')
   end
 
   post('/stories') do
@@ -88,11 +101,13 @@ class App < Sinatra::Base
 
   get('/stories/:id') do
     auth_basic!
+    @story = Story.first(:id => params[:id])
     erb(:'stories/show')
   end
 
   get('/stories/:id/edit') do
     auth_basic!
+    @story = Story.first(:id => params[:id])
     erb(:'stories/edit')
   end
 
@@ -100,7 +115,14 @@ class App < Sinatra::Base
     auth_basic!
     begin
       story = Story.first(:id => params[:id])
-      story.update(params)
+      story.update({
+        :name        => params[:name],
+        :beginning   => params[:beginning],
+        :queued      => params[:queued],
+        :ringing     => params[:ringing],
+        :in_progress => params[:in_progress],
+        :size        => params[:size]
+      })
       redirect('/stories')
     rescue
       not_found

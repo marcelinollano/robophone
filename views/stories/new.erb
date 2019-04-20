@@ -1,0 +1,6 @@
+<main>
+  <form method="post" action="/stories">
+    <h1>New story</h1>
+    <%= erb(:'stories/form', :locals => {:story => @story}) %>
+  </form>
+</main>

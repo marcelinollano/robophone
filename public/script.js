@@ -2,7 +2,7 @@
 
 function deleteItem(url, callback) {
   console.log(url + "?token=" + envToken);
-  var r = new XMLHttpRequest();
+  const r = new XMLHttpRequest();
   r.open("DELETE", url + "?token=" + envToken, true);
   r.onreadystatechange = function() {
     if (r.readyState != 4 || r.status != 200) return;
@@ -11,14 +11,14 @@ function deleteItem(url, callback) {
   r.send();
 }
 
-var deleteLinks = document.getElementsByClassName("delete");
+const deleteLinks = document.getElementsByClassName("delete");
 
-for (var i = deleteLinks.length - 1; i >= 0; i--) {
+for (let i = deleteLinks.length - 1; i >= 0; i--) {
   deleteLinks[i].addEventListener(
     "click",
     function(e) {
-      var link = this;
-      var url = this.href;
+      const link = this;
+      const url = this.href;
       deleteItem(url, function(res) {
         if (res == "true") {
           link.closest("tr").classList.toggle("is-marked");
@@ -31,4 +31,11 @@ for (var i = deleteLinks.length - 1; i >= 0; i--) {
     },
     false
   );
+}
+
+const phones = document.getElementsByClassName("phone");
+for (let i = 0; i < phones.length; i++) {
+  text = phones[i].innerHTML;
+  text = text.replace(/\d{6}$/, "******");
+  phones[i].innerHTML = text;
 }

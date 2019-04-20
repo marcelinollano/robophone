@@ -13,7 +13,7 @@ DB.create_table?(:contacts) do
   primary_key :id
   String   :name
   String   :phone
-  Integer  :pings
+  Integer  :rings
   DateTime :created_at
   DateTime :updated_at
   index    :id, :unique => true
@@ -28,7 +28,7 @@ class Contact < Sequel::Model
     super
     validates_presence([:name, :phone])
     validates_unique(:phone)
-    validates_numeric(:pings)
+    validates_numeric(:rings)
     if Phonelib.invalid_for_country?(self.phone, 'ES')
       errors.add(:phone, 'invalid')
     end
@@ -36,7 +36,7 @@ class Contact < Sequel::Model
 
   def before_validation
     super
-    self.pings ||= 0
+    self.rings ||= 3
   end
 end
 
@@ -45,11 +45,11 @@ end
 DB.create_table?(:stories) do
   primary_key :id
   String   :name
-  String   :permalink
   String   :beginning
-  Integer  :time_queued
-  Integer  :time_ringing
-  Integer  :time_in_progress
+  Integer  :queued
+  Integer  :ringing
+  Integer  :in_progress
+  Integer  :size
   DateTime :created_at
   DateTime :updated_at
   index    :id, :unique => true
@@ -62,8 +62,8 @@ class Story < Sequel::Model
 
   def validate
     super
-    validates_presence([:name, :permalink])
-    validates_unique([:name, :permalink])
+    validates_presence([:name, :beginning, :queued, :ringing, :in_progress, :size])
+    validates_unique(:name)
   end
 end
 

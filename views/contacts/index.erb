@@ -1,21 +1,22 @@
-<form method="post" action="/contacts">
-  <%= erb(:'contacts/form', :locals => {:contact => @contact}) %>
-</form>
+<header>
+  <%= erb(:'nav') %>
+  <a href="/contacts/new" class="primary">New contact</a>
+</header>
 
-<div class="contacts">
+<main>
   <% if @contacts.any? %>
     <table>
       <tr>
         <th>Name</th>
         <th>Phone</th>
-        <th>Pings</th>
+        <th>Rings</th>
         <th></th>
       </tr>
       <% for contact in @contacts %>
       <tr>
         <td><%= contact.name %></td>
-        <td><a href="tel:<%= contact.phone %>"><%= contact.phone %></a></td>
-        <td><%= contact.pings %></td>
+        <td><a href="tel:<%= contact.phone %>" class="phone"><%= contact.phone %></a></td>
+        <td><%= contact.rings %></td>
         <td>
           <menu>
             <ul>
@@ -30,4 +31,4 @@
   <% else %>
     <p>No contacts yet.</p>
   <% end %>
-</div>
+</main>
