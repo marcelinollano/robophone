@@ -1,7 +1,7 @@
 # Broken phone
 
 - [x] Limit calls to 2 min
-- [ ] Scaffolding
+- [x] Scaffolding
 - [ ] Save the call
 - [ ] Perform a run
 
