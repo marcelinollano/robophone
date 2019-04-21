@@ -15,14 +15,14 @@ opts = {}
 OptionParser.new do |opt|
   opt.on('--from FROM') { |o| opts[:from] = o }
   opt.on('--to TO')     { |o| opts[:to]   = o }
-  opt.on('--text TEXT') { |o| opts[:text] = CGI.escape(o) }
+  # opt.on('--text TEXT') { |o| opts[:text] = CGI.escape(o) }
 end.parse!
 
 params = {
   :record => true,
   # :url   => http://demo.twilio.com/docs/voice.xml
   # :url   => "#{ENV['URL']}/voice.xml?token=#{ENV['TOKEN']}&text=#{opts[:text]}",
-  :url   => "#{ENV['URL']}/voice.xml",
+  :url   => "https://robocall.marcelinollano.com/voice.xml",
   :to    => opts[:to],
   :from  => opts[:from]
 }
