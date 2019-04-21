@@ -20,21 +20,33 @@ class App < Sinatra::Base
 
   get('/contacts') do
     auth_basic!
-    @contact  = Contact.new
-    @contacts = Contact.all
-    erb(:'contacts/index')
+    begin
+      @contact  = Contact.new
+      @contacts = Contact.all
+      erb(:'contacts/index')
+    rescue
+      not_found
+    end
   end
 
   get('/contacts/new') do
     auth_basic!
-    @contact  = Contact.new
-    erb(:'contacts/new')
+    begin
+      @contact  = Contact.new
+      erb(:'contacts/new')
+    rescue
+      bad_request
+    end
   end
 
   get('/contacts/:id/edit') do
     auth_basic!
-    @contact = Contact.first(:id => params[:id])
-    erb(:'contacts/edit')
+    begin
+      @contact = Contact.first(:id => params[:id])
+      erb(:'contacts/edit')
+    rescue
+      not_found
+    end
   end
 
   post('/contacts') do
@@ -78,16 +90,24 @@ class App < Sinatra::Base
 
   get('/stories') do
     auth_basic!
-    @story = Story.new
-    @stories = Story.all
-    erb(:'stories/index')
+    begin
+      @story = Story.new
+      @stories = Story.all
+      erb(:'stories/index')
+    rescue
+      not_found
+    end
   end
 
   get('/stories/new') do
     auth_basic!
-    @from  = params[:from]
-    @story = Story.new
-    erb(:'stories/new')
+    begin
+      @from  = params[:from]
+      @story = Story.new
+      erb(:'stories/new')
+    rescue
+      bad_request
+    end
   end
 
   post('/stories') do
@@ -102,15 +122,23 @@ class App < Sinatra::Base
 
   get('/stories/:id') do
     auth_basic!
-    @story = Story.first(:id => params[:id])
-    erb(:'stories/show')
+    begin
+      @story = Story.first(:id => params[:id])
+      erb(:'stories/show')
+    rescue
+      not_found
+    end
   end
 
   get('/stories/:id/edit') do
     auth_basic!
-    @from  = params[:from]
-    @story = Story.first(:id => params[:id])
-    erb(:'stories/edit')
+    begin
+      @from  = params[:from]
+      @story = Story.first(:id => params[:id])
+      erb(:'stories/edit')
+    rescue
+      not_found
+    end
   end
 
   put('/stories/:id') do
