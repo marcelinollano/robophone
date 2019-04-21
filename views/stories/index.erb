@@ -1,29 +1,25 @@
-<header>
+<div class="header">
   <%= erb(:'nav') %>
   <a href="/stories/new?from=/stories" class="primary">New story</a>
-</header>
+</div>
 
-<main>
+<div class="header">
   <% if @stories.any? %>
     <table>
       <tr>
         <th>Name</th>
         <th>Beginning</th>
-        <th>Length</th>
         <th></th>
       </tr>
       <% for story in @stories %>
       <tr>
         <td><a href="/stories/<%= story.id %>"><%= story.name %></a></td>
         <td><%= story.text %></td>
-        <td><%= story.length %> calls</td>
         <td>
-          <menu>
-            <ul>
-              <li><a href="/stories/<%= story.id %>/edit?from=/stories">Edit</a></li>
-              <li><a href="/stories/<%= story.id %>" class="delete">Delete</a></li>
-            </ul>
-          </menu>
+          <span class="menu">
+            <a href="/stories/<%= story.id %>/edit?from=/stories" class="edit">Edit</a>
+            <a href="/stories/<%= story.id %>" class="delete">Delete</a>
+          </span>
         </td>
       </tr>
       <% end %>
@@ -31,4 +27,4 @@
   <% else %>
     <p>No stories yet.</p>
   <% end %>
-</main>
+</div>

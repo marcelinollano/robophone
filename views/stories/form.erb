@@ -37,11 +37,19 @@
     secs
   </span>
 </p>
+<hr>
+<h2>Calls</h2>
 <p>
-  <label for="length">Length</label>
+  <label for="in_progress">Step 1</label>
   <span class="field">
-    <input name="length" type="number" id="length" value="<%= story.length ||= ENV['DEFAULT_LENGTH'] %>">
-    calls
+    <input name="in_progress" type="number" value="1">
+    <select name="calls[]">
+      <option value="random">Random</option>
+    </select>
+  </span>
+  <span class="menu">
+    <a href="#" class="add">Add</a>
+    <a href="#" class="delete">Delete</a>
   </span>
 </p>
 <hr>

@@ -34,21 +34,22 @@ for (let i = deleteLinks.length - 1; i >= 0; i--) {
 }
 
 const phones = document.getElementsByClassName("phone");
+
 for (let i = 0; i < phones.length; i++) {
   text = phones[i].innerHTML;
   text = text.replace(/\d{6}$/, "******");
   phones[i].innerHTML = text;
 }
 
-// faye
-
-const client = new Faye.Client("http://localhost:5000/faye");
-
-const subscription = client.subscribe("/messages", function(data) {
-  // alert(data);
-  location.reload();
-});
-
-subscription.then(function() {
-  console.log("Subscription is now active!");
-});
+// http://localhost:5000/faye -d 'message={"channel":"/messages", "data": "hello", "ext": {"token": TOKEN}}'
+//
+// const client = new Faye.Client("http://localhost:5000/faye");
+//
+// const subscription = client.subscribe("/messages", function(data) {
+//   alert(data);
+//   location.reload();
+// });
+//
+// subscription.then(function() {
+//   console.log("Subscription is now active!");
+// });

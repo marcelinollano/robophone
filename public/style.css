@@ -13,23 +13,22 @@ body {
   padding: 3rem;
 }
 
-header {
-  display: flex;
-}
-
-header nav {
-  flex: 1;
-  align-items: center;
-}
-
 h1 {
-  font-size: 1.8rem;
+  font-size: 2rem;
+  font-weight: 600;
   margin: 0 0 2rem 0;
 }
 
 h1 a {
+  font-size: 1.8rem;
   font-weight: 400;
   margin-left: 0.5rem;
+}
+
+h2 {
+  font-size: 1.8rem;
+  font-weight: 600;
+  margin: 0 0 2rem 0;
 }
 
 p,
@@ -82,23 +81,6 @@ a.delete {
   color: #e43161;
 }
 
-nav {
-  margin-bottom: 3rem;
-  line-height: 4rem;
-}
-
-nav ul {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-}
-
-nav li {
-  display: inline;
-  margin-right: 1.5rem;
-  font-size: 1.8rem;
-}
-
 table {
   width: 100%;
 }
@@ -116,35 +98,19 @@ td {
   font-size: 1.6rem;
   font-weight: 400;
   margin: 3rem 0;
-  line-height: 3rem;
+  line-height: 4rem;
   padding: 0 1rem;
 }
 
 th {
-  font-weight: bold;
-  text-align: left;
   background-color: #eee;
+  font-weight: bold;
+  line-height: 3rem;
+  text-align: left;
 }
 
 td:last-child {
   text-align: right;
-}
-
-menu {
-  display: inline;
-  margin: 0;
-  padding: 0;
-}
-
-menu ul {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-}
-
-menu li {
-  display: inline;
-  margin-left: 1rem;
 }
 
 form {
@@ -189,6 +155,10 @@ form textarea {
   width: 100%;
 }
 
+form select {
+  font-size: 1.8rem;
+}
+
 form textarea {
   height: 4.6rem;
 }
@@ -196,7 +166,7 @@ form textarea {
 form input[type="number"] {
   cursor: pointer;
   margin-right: 1rem;
-  width: 8rem;
+  width: 5rem;
 }
 
 form input[type="submit"] {
@@ -216,4 +186,25 @@ form input[type="submit"] {
 
 form input[type="submit"]:hover {
   background-color: #1559bf;
+}
+
+.header {
+  display: flex;
+}
+
+.nav {
+  align-items: center;
+  flex: 1;
+  margin-bottom: 3rem;
+}
+
+.nav a {
+  font-size: 1.8rem;
+  line-height: 4rem;
+  margin-right: 1.5rem;
+}
+
+.menu a {
+  display: inline-block;
+  margin-left: 1rem;
 }

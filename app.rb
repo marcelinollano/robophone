@@ -166,8 +166,7 @@ class App < Sinatra::Base
         :phone       => params[:phone],
         :queued      => params[:queued],
         :ringing     => params[:ringing],
-        :in_progress => params[:in_progress],
-        :length      => params[:length]
+        :in_progress => params[:in_progress]
       })
       redirect(params[:from])
     rescue

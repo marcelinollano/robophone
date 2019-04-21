@@ -39,7 +39,6 @@ DB.create_table?(:stories) do
   Integer  :queued
   Integer  :ringing
   Integer  :in_progress
-  Integer  :length
   DateTime :created_at
   DateTime :updated_at
   index    :id, :unique => true
@@ -52,7 +51,7 @@ class Story < Sequel::Model
 
   def validate
     super
-    validates_presence([:name, :text, :phone, :queued, :ringing, :in_progress, :length])
+    validates_presence([:name, :text, :phone, :queued, :ringing, :in_progress])
     validates_unique([:name, :text])
     errors.add(:phone, "#{self.phone}") if Phonelib.invalid_for_country?(self.phone, 'ES')
   end
@@ -69,6 +68,7 @@ DB.create_table?(:calls) do
   primary_key :id
   foreign_key :story_id,   :stories
   foreign_key :contact_id, :contacts
+  Integer  :order
   String   :audio
   String   :transcript
   String   :status
@@ -85,6 +85,6 @@ class Call < Sequel::Model
 
   def validate
     super
-    validates_presence([:audio, :transcript, :status])
+    validates_presence([:audio, :transcript, :status, :order])
   end
 end
