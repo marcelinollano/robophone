@@ -35,6 +35,7 @@ DB.create_table?(:stories) do
   String   :name
   String   :text
   String   :phone
+  String   :status
   Integer  :queued
   Integer  :ringing
   Integer  :in_progress
@@ -55,6 +56,11 @@ class Story < Sequel::Model
     validates_unique([:name, :text])
     errors.add(:phone, "#{self.phone}") if Phonelib.invalid_for_country?(self.phone, 'ES')
   end
+
+  def before_create
+    super
+    self.status = 'unlocked'
+  end
 end
 
 # Posts
@@ -66,6 +72,7 @@ DB.create_table?(:posts) do
   String   :status
   String   :audio
   String   :transcript
+  String   :status
   DateTime :created_at
   DateTime :updated_at
   index    :id, :unique => true
@@ -79,6 +86,6 @@ class Post < Sequel::Model
 
   def validate
     super
-    validates_presence([:audio, :transcript])
+    validates_presence([:audio, :transcript, :status])
   end
 end
