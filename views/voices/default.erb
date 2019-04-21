@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Response>
-  <Say voice="alice">It's working!</Say>
+  <Play><%= ENV['URL'] %>/intro.mp3</Play>
+  <Say voice="Polly.Conchita" language="es-ES"><%= @text %></Say>
+  <Play><%= ENV['URL'] %>/beep.mp3</Play>
 </Response>
