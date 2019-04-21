@@ -146,12 +146,11 @@ class App < Sinatra::Base
     auth_basic!
     begin
       story = Story.first(:id => params[:id])
-
-      from = '+34646446543'
-      to   = '+34673300601'
-      text = story.beginning
-
+      from  = '+34646446543'
+      to    = '+34646446543'
+      text  = story.beginning
       Thread.new { system(`./bin/dial --from "#{from}" --to "#{to}" --text "#{text}"`) }
+      "Dialing NOW!"
     rescue
       not_found
     end
