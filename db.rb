@@ -69,7 +69,6 @@ DB.create_table?(:posts) do
   primary_key :id
   foreign_key :story_id,   :stories
   foreign_key :contact_id, :contacts
-  String   :status
   String   :audio
   String   :transcript
   String   :status
