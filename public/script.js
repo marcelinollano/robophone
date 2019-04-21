@@ -39,3 +39,16 @@ for (let i = 0; i < phones.length; i++) {
   text = text.replace(/\d{6}$/, "******");
   phones[i].innerHTML = text;
 }
+
+// faye
+
+const client = new Faye.Client("http://localhost:5000/faye");
+
+const subscription = client.subscribe("/messages", function(data) {
+  // alert(data);
+  location.reload();
+});
+
+subscription.then(function() {
+  console.log("Subscription is now active!");
+});

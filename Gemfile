@@ -8,6 +8,7 @@ gem 'sinatra'
 gem 'sequel'
 gem 'sqlite3'
 gem 'phonelib'
+gem 'faye'
 gem 'puma'
 gem 'foreman'
 
