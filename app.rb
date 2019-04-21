@@ -1,3 +1,4 @@
+require 'cgi'
 require 'rubygems'
 require 'bundler'
 Bundler.require
@@ -168,6 +169,20 @@ class App < Sinatra::Base
       return('true')
     rescue
       not_found
+    end
+  end
+
+  # Voice
+
+  get('/voice.xml') do
+    auth_token!(params[:token])
+    if params[:text] && !params[:text].strip.empty?
+      @text = CGI.unescape(params[:text])
+      content_type('text/xml')
+      erb(:'voices/default', :layout => false)
+    else
+      content_type('text/xml')
+      erb(:'voices/error', :layout => false)
     end
   end
 

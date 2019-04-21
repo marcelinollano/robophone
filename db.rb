@@ -1,8 +1,3 @@
-require 'rubygems'
-require 'bundler'
-Bundler.require
-Dotenv.load
-
 Sequel::Model.plugin(:update_or_create)
 DB = Sequel.connect("sqlite://db/#{ENV['RACK_ENV']}.sqlite3")
 DB.extension(:pagination)

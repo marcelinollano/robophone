@@ -11,6 +11,6 @@ gem 'sqlite3'
 gem 'puma'
 gem 'foreman'
 
-group :development do
+group(:development) do
   gem 'shotgun'
 end

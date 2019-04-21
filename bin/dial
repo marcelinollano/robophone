@@ -1,19 +1,28 @@
 #!/usr/bin/env ruby
 
+require 'optparse'
+require 'cgi'
 require 'rubygems'
-require 'bundler'
-Bundler.require
+require 'twilio-ruby'
+require 'dotenv'
 Dotenv.load
 
 $stdout.sync = true
 account_sid  = ENV['TWILIO_ACCOUNT_SID']
 auth_token   = ENV['TWILIO_AUTH_TOKEN']
 
+opts = {}
+OptionParser.new do |opt|
+  opt.on('--from FROM') { |o| opts[:from] = o }
+  opt.on('--to TO')     { |o| opts[:to]   = o }
+  opt.on('--text TEXT') { |o| opts[:text] = CGI.escape(o) }
+end.parse!
+
 params = {
   :record => true,
-  :url    => 'http://demo.twilio.com/docs/voice.xml',
-  :to    => '+34646446543',
-  :from  => '+34646446543'
+  :url   => "#{ENV['URL']}/voice.xml?token=#{ENV['token']}&text=#{opts[:text]}",
+  :to    => opts[:to],
+  :from  => opts[:from]
 }
 
 @client = Twilio::REST::Client.new(account_sid, auth_token)
