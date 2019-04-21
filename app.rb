@@ -188,7 +188,7 @@ class App < Sinatra::Base
 
   # Voice
 
-  get('/voice.xml') do
+  post('/voice.xml') do
     content_type('text/xml')
     erb(:'voices/default', :layout => false)
     # auth_token!(params[:token])
