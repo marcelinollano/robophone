@@ -5,36 +5,42 @@
   </span>
 </p>
 <p>
-  <label for="beginning">Beginning</label>
+  <label for="text">Beginning</label>
   <span class="field">
-    <textarea name="beginning" id="beginning"><%= story.beginning %></textarea>
+    <textarea name="text" id="text"><%= story.text %></textarea>
+  </span>
+</p>
+<p>
+  <label for="phone">Phone</label>
+  <span class="field">
+    <input name="phone" type="tel" id="phone" value="<%= story.phone ||= ENV['PHONE'] %>">
   </span>
 </p>
 <p>
   <label for="queued">Queued</label>
   <span class="field">
-    <input name="queued" type="number" id="queued" value="<%= story.queued ||= 20 %>">
+    <input name="queued" type="number" id="queued" value="<%= story.queued ||= ENV['QUEUED'] %>">
     secs
   </span>
 </p>
 <p>
   <label for="ringing">Ringing</label>
   <span class="field">
-    <input name="ringing" type="number" id="ringing" value="<%= story.ringing ||= 20 %>">
+    <input name="ringing" type="number" id="ringing" value="<%= story.ringing ||= ENV['RINGING'] %>">
     secs
   </span>
 </p>
 <p>
   <label for="in_progress">In progress</label>
   <span class="field">
-    <input name="in_progress" type="number" id="in_progress" value="<%= story.in_progress ||= 20 %>">
+    <input name="in_progress" type="number" id="in_progress" value="<%= story.in_progress ||= ENV['IN_PROGRESS'] %>">
     secs
   </span>
 </p>
 <p>
   <label for="size">Size</label>
   <span class="field">
-    <input name="size" type="number" id="size" value="<%= story.size ||= 5 %>">
+    <input name="size" type="number" id="size" value="<%= story.size ||= ENV['SIZE'] %>">
     posts
   </span>
 </p>

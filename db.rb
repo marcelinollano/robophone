@@ -21,17 +21,10 @@ class Contact < Sequel::Model
 
   def validate
     super
-    validates_presence([:name, :phone])
+    validates_presence([:name, :phone, :rings])
     validates_unique(:phone)
     validates_numeric(:rings)
-    if Phonelib.invalid_for_country?(self.phone, 'ES')
-      errors.add(:phone, 'invalid')
-    end
-  end
-
-  def before_validation
-    super
-    self.rings ||= 3
+    errors.add(:phone, 'invalid') if Phonelib.invalid_for_country?(self.phone, 'ES')
   end
 end
 
@@ -40,7 +33,8 @@ end
 DB.create_table?(:stories) do
   primary_key :id
   String   :name
-  String   :beginning
+  String   :text
+  String   :phone
   Integer  :queued
   Integer  :ringing
   Integer  :in_progress
@@ -57,8 +51,9 @@ class Story < Sequel::Model
 
   def validate
     super
-    validates_presence([:name, :beginning, :queued, :ringing, :in_progress, :size])
-    validates_unique(:name)
+    validates_presence([:name, :text, :phone, :queued, :ringing, :in_progress, :size])
+    validates_unique([:name, :text])
+    errors.add(:phone, "#{self.phone}") if Phonelib.invalid_for_country?(self.phone, 'ES')
   end
 end
 
@@ -87,18 +82,3 @@ class Post < Sequel::Model
     validates_presence([:audio, :transcript])
   end
 end
-
-# Seeds
-
-# services = [{
-#   :permalink => 'https://instagram.com',
-#   :name => 'Instagram'
-# }]
-#
-# services.each do |service|
-#   Service.update_or_create({
-#     :permalink => service[:permalink],
-#     :name      => service[:name],
-#     :slug      => service[:name].to_slug.normalize.to_s
-#   })
-# end

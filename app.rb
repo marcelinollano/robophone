@@ -148,7 +148,7 @@ class App < Sinatra::Base
       story = Story.first(:id => params[:id])
       from  = '+34646446543'
       to    = '+34646446543'
-      text  = story.beginning
+      text  = story.text
       Thread.new { system(`./bin/dial --from "#{from}" --to "#{to}" --text "#{text}"`) }
       "Dialing NOW!"
     rescue
@@ -162,7 +162,8 @@ class App < Sinatra::Base
       story = Story.first(:id => params[:id])
       story.update({
         :name        => params[:name],
-        :beginning   => params[:beginning],
+        :text        => params[:text],
+        :phone       => params[:phone],
         :queued      => params[:queued],
         :ringing     => params[:ringing],
         :in_progress => params[:in_progress],

@@ -12,7 +12,7 @@ Dotenv.load
 require './db.rb'
 
 story = Story.first(:id => ARGV[0])
-text  = CGI.escape(story.beginning)
+text  = CGI.escape(story.text)
 
 params = {
   :record => true,
