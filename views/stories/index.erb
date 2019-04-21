@@ -9,14 +9,14 @@
       <tr>
         <th>Name</th>
         <th>Beginning</th>
-        <th>Size</th>
+        <th>Length</th>
         <th></th>
       </tr>
       <% for story in @stories %>
       <tr>
         <td><a href="/stories/<%= story.id %>"><%= story.name %></a></td>
         <td><%= story.text %></td>
-        <td><%= story.length %> posts</td>
+        <td><%= story.length %> calls</td>
         <td>
           <menu>
             <ul>

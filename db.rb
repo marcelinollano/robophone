@@ -17,7 +17,7 @@ end
 class Contact < Sequel::Model
   plugin(:timestamps, :update_on_create => true)
   plugin(:validation_helpers)
-  one_to_many :posts
+  one_to_many :calls
 
   def validate
     super
@@ -48,7 +48,7 @@ end
 class Story < Sequel::Model
   plugin(:timestamps, :update_on_create => true)
   plugin(:validation_helpers)
-  one_to_many :posts
+  one_to_many :calls
 
   def validate
     super
@@ -63,9 +63,9 @@ class Story < Sequel::Model
   end
 end
 
-# Posts
+# Calls
 
-DB.create_table?(:posts) do
+DB.create_table?(:calls) do
   primary_key :id
   foreign_key :story_id,   :stories
   foreign_key :contact_id, :contacts
@@ -77,7 +77,7 @@ DB.create_table?(:posts) do
   index    :id, :unique => true
 end
 
-class Post < Sequel::Model
+class Call < Sequel::Model
   plugin(:timestamps, :update_on_create => true)
   plugin(:validation_helpers)
   many_to_one :story
