@@ -189,15 +189,16 @@ class App < Sinatra::Base
   # Voice
 
   get('/voice.xml') do
-    auth_token!(params[:token])
-    if params[:text] && !params[:text].strip.empty?
-      @text = CGI.unescape(params[:text])
-      content_type('text/xml')
-      erb(:'voices/default', :layout => false)
-    else
-      content_type('text/xml')
-      erb(:'voices/error', :layout => false)
-    end
+    erb(:'voices/default', :layout => false)
+    # auth_token!(params[:token])
+    # if params[:text] && !params[:text].strip.empty?
+    #   @text = CGI.unescape(params[:text])
+    #   content_type('text/xml')
+    #   erb(:'voices/default', :layout => false)
+    # else
+    #   content_type('text/xml')
+    #   erb(:'voices/error', :layout => false)
+    # end
   end
 
   # Root

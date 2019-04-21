@@ -20,8 +20,9 @@ end.parse!
 
 params = {
   :record => true,
-  # http://demo.twilio.com/docs/voice.xml
-  :url   => "#{ENV['URL']}/voice.xml?token=#{ENV['TOKEN']}&text=#{opts[:text]}",
+  # :url   => http://demo.twilio.com/docs/voice.xml
+  # :url   => "#{ENV['URL']}/voice.xml?token=#{ENV['TOKEN']}&text=#{opts[:text]}",
+  :url   => "#{ENV['URL']}/voice.xml",
   :to    => opts[:to],
   :from  => opts[:from]
 }
