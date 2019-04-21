@@ -20,7 +20,7 @@ end.parse!
 
 params = {
   :record => true,
-  :url   => "#{ENV['URL']}/voice.xml?token=#{ENV['TOKEN']}&text=#{opts[:text]}",
+  :url   => "#{ENV['APP_URL']}/voice.xml?token=#{ENV['APP_TOKEN']}&text=#{opts[:text]}",
   :to    => opts[:to],
   :from  => opts[:from]
 }

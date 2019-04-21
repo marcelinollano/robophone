@@ -13,34 +13,34 @@
 <p>
   <label for="phone">Phone</label>
   <span class="field">
-    <input name="phone" type="tel" id="phone" value="<%= story.phone ||= ENV['PHONE'] %>">
+    <input name="phone" type="tel" id="phone" value="<%= story.phone ||= ENV['DEFAULT_PHONE'] %>">
   </span>
 </p>
 <p>
   <label for="queued">Queued</label>
   <span class="field">
-    <input name="queued" type="number" id="queued" value="<%= story.queued ||= ENV['QUEUED'] %>">
+    <input name="queued" type="number" id="queued" value="<%= story.queued ||= ENV['DEFAULT_QUEUED'] %>">
     secs
   </span>
 </p>
 <p>
   <label for="ringing">Ringing</label>
   <span class="field">
-    <input name="ringing" type="number" id="ringing" value="<%= story.ringing ||= ENV['RINGING'] %>">
+    <input name="ringing" type="number" id="ringing" value="<%= story.ringing ||= ENV['DEFAULT_RINGING'] %>">
     secs
   </span>
 </p>
 <p>
   <label for="in_progress">In progress</label>
   <span class="field">
-    <input name="in_progress" type="number" id="in_progress" value="<%= story.in_progress ||= ENV['IN_PROGRESS'] %>">
+    <input name="in_progress" type="number" id="in_progress" value="<%= story.in_progress ||= ENV['DEFAULT_IN_PROGRESS'] %>">
     secs
   </span>
 </p>
 <p>
-  <label for="size">Size</label>
+  <label for="length">Length</label>
   <span class="field">
-    <input name="size" type="number" id="size" value="<%= story.size ||= ENV['SIZE'] %>">
+    <input name="length" type="number" id="length" value="<%= story.length ||= ENV['DEFAULT_LENGTH'] %>">
     posts
   </span>
 </p>

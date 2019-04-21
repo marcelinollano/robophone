@@ -38,7 +38,7 @@ DB.create_table?(:stories) do
   Integer  :queued
   Integer  :ringing
   Integer  :in_progress
-  Integer  :size
+  Integer  :length
   DateTime :created_at
   DateTime :updated_at
   index    :id, :unique => true
@@ -51,7 +51,7 @@ class Story < Sequel::Model
 
   def validate
     super
-    validates_presence([:name, :text, :phone, :queued, :ringing, :in_progress, :size])
+    validates_presence([:name, :text, :phone, :queued, :ringing, :in_progress, :length])
     validates_unique([:name, :text])
     errors.add(:phone, "#{self.phone}") if Phonelib.invalid_for_country?(self.phone, 'ES')
   end

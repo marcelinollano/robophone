@@ -167,7 +167,7 @@ class App < Sinatra::Base
         :queued      => params[:queued],
         :ringing     => params[:ringing],
         :in_progress => params[:in_progress],
-        :size        => params[:size]
+        :length      => params[:length]
       })
       redirect(params[:from])
     rescue
@@ -215,14 +215,14 @@ private
     unless auth.provided? &&
       auth.basic? &&
       auth.credentials &&
-      auth.credentials == [ENV['LOGIN'], ENV['PASS']]
+      auth.credentials == [ENV['APP_LOGIN'], ENV['APP_PASS']]
       response['WWW-Authenticate'] = %(Basic realm='Restricted area')
       unauthorized
     end
   end
 
   def auth_token!(token)
-    unless token == ENV['TOKEN']
+    unless token == ENV['APP_TOKEN']
       unauthorized
     end
   end

@@ -16,7 +16,7 @@ text  = CGI.escape(story.text)
 
 params = {
   :record => true,
-  :url   => "#{ENV['URL']}/voice.xml?token=#{ENV['TOKEN']}&text=#{text}",
+  :url   => "#{ENV['APP_URL']}/voice.xml?token=#{ENV['APP_TOKEN']}&text=#{text}",
   :from  => ARGV[1],
   :to    => ARGV[2]
 }
