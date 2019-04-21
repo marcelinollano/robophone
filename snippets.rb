@@ -1,6 +1,16 @@
 # Snipppets
 # =========
 #
+# XML example
+# -----------
+#
+# <?xml version="1.0" encoding="UTF-8"?>
+# <Response>
+#   <Play><%= ENV['URL'] %>/intro.mp3</Play>
+#   <Say voice="Polly.Conchita" language="es-ES"><%= @text %></Say>
+#   <Play><%= ENV['URL'] %>/beep.mp3</Play>
+# </Response>
+#
 # Elvis left the building
 # -----------------------
 #
