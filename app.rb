@@ -189,6 +189,7 @@ class App < Sinatra::Base
   # Voice
 
   get('/voice.xml') do
+    content_type('text/xml')
     erb(:'voices/default', :layout => false)
     # auth_token!(params[:token])
     # if params[:text] && !params[:text].strip.empty?
