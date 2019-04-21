@@ -142,6 +142,21 @@ class App < Sinatra::Base
     end
   end
 
+  get('/stories/:id/dial') do
+    auth_basic!
+    begin
+      @story = Story.first(:id => params[:id])
+
+      from = '+34646446543'
+      to   = '+34673300601'
+      text = Story.beginning
+
+      Thread.new { system(`./bin/dial --from "#{from}" --to "#{to}" --text "#{text}"`) }
+    rescue
+      not_found
+    end
+  end
+
   put('/stories/:id') do
     auth_basic!
     begin
