@@ -193,7 +193,7 @@ class App < Sinatra::Base
     if params[:text] && !params[:text].strip.empty?
       @text = CGI.unescape(params[:text])
       content_type('text/xml')
-      erb(:'voices/default', :layout => false)
+      erb(:'voices/intro', :layout => false)
     else
       content_type('text/xml')
       erb(:'voices/error', :layout => false)
