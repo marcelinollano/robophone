@@ -79,7 +79,7 @@ puts("#{format('calling')}: #{params[:to]}")
 
 if continue?(request, 'queued', 20)
   if continue?(request, 'ringing', 20)
-     continue?(request, 'in-progress', 20)
+     continue?(request, 'in-progress', 40)
   end
 end
 
