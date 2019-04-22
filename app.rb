@@ -234,7 +234,7 @@ private
     end
   end
 
-  def contacts_from(params)
+  def contact_from(params)
     {
       :name  => params[:name],
       :phone => params[:phone],
