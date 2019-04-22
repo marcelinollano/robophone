@@ -41,20 +41,41 @@
   <label for="calls">Calls</label>
   <span class="inputs">
     <ol class="list">
-      <li>
-        <select name="calls[]">
-          <option value="random">Random</option>
-          <% for contact in @contacts %>
+      <% if @calls.any? %>
+        <% for call in @calls do %>
+          <li>
+            <select name="calls[<%= call.id %>]">
+              <option value="">Select…</option>
+              <option value="0" <%= "selected=selected" if call.contact_id == 0 %>>Random</option>
+              <% for contact in @contacts %>
+              <option value="<%= contact.id %>" <%= "selected=selected" if contact.id == call.contact_id %>>
+                <%= contact.name %> (<%= contact.phone[0...-6] << '******' %>)
+              </option>
+              <% end %>
+            </select>
+            <ul class="actions">
+              <li><a href="javascript:void(0);" class="add">Add</a></li>
+              <li><a href="javascript:void(0);" class="delete">Delete</a></li>
+            </ul>
+          </li>
+        <% end %>
+      <% else %>
+        <li>
+          <select name="calls[]">
+            <option value="" selected="selected">Select…</option>
+            <option value="0">Random</option>
+            <% for contact in @contacts %>
             <option value="<%= contact.id %>">
               <%= contact.name %> (<%= contact.phone[0...-6] << '******' %>)
             </option>
-          <% end %>
-        </select>
-        <ul class="actions">
-          <li><a href="#" class="add">Add</a></li>
-          <li><a href="#" class="delete">Delete</a></li>
-        </ul>
-      </li>
+            <% end %>
+          </select>
+          <ul class="actions">
+            <li><a href="javascript:void(0);" class="add">Add</a></li>
+            <li><a href="javascript:void(0);" class="delete">Delete</a></li>
+          </ul>
+        </li>
+      <% end %>
     </ol>
   </span>
 </div>

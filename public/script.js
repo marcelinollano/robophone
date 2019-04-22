@@ -2,7 +2,7 @@
 
 // Delete resoruces
 
-const deleteResourceRequest = function(url, callback) {
+const deleteResource = function(url, callback) {
   const r = new XMLHttpRequest();
   r.open("DELETE", url + "?token=" + envToken, true);
   r.onreadystatechange = function() {
@@ -13,13 +13,13 @@ const deleteResourceRequest = function(url, callback) {
 };
 
 const deleteResourceEvents = function(links) {
-  for (let i = links.length - 1; i >= 0; i--) {
-    links[i].addEventListener(
+  links.forEach(function(link) {
+    link.addEventListener(
       "click",
       function(e) {
         const link = this;
         const url = this.href;
-        deleteResourceRequest(url, function(res) {
+        deleteResource(url, function(res) {
           if (res == "true") {
             const table = document.querySelectorAll("table")[0];
             if (table.querySelectorAll("tr").length == 2) {
@@ -37,7 +37,7 @@ const deleteResourceEvents = function(links) {
       },
       false
     );
-  }
+  });
 };
 
 deleteResourceEvents(document.querySelectorAll("table .delete"));
@@ -54,18 +54,61 @@ const maskPhones = function(phones) {
 
 maskPhones(document.getElementsByClassName("phone"));
 
-// const addList = document.querySelectorAll(".list .add");
-//
-// for (let i = 0; i < addList.length; i++) {
-//   addList[i].addEventListener("click", function(e) {
-//     const item = addList[i].closest("ol > li");
-//     const dup = item.cloneNode(true);
-//     item.after(dup);
-//     e.preventDefault;
-//   });
-// }
+// Add list items
 
-// http://localhost:5000/faye -d 'message={"channel":"/messages", "data": "hello", "ext": {"token": TOKEN}}'
+const addListItem = function(link) {
+  const listItem = link.closest("ol > li");
+  const listItemCopy = listItem.cloneNode(true);
+  const select = listItemCopy.querySelectorAll("select")[0];
+  select.name = "calls[]";
+  const options = select.querySelectorAll("option");
+  options.forEach(function(option) {
+    option.selected = false;
+  });
+  const addLink = listItemCopy.querySelectorAll(".add")[0];
+  const deleteLink = listItemCopy.querySelectorAll(".delete")[0];
+  addListItemEvent(addLink);
+  deleteListItemEvent(deleteLink);
+  listItem.after(listItemCopy);
+};
+
+const addListItemEvent = function(link) {
+  link.addEventListener("click", function(e) {
+    addListItem(link);
+    e.preventDefault;
+  });
+};
+
+const addListItemLinks = document.querySelectorAll(".list .add");
+
+addListItemLinks.forEach(function(link) {
+  addListItemEvent(link);
+});
+
+// Delete list items
+
+const deleteListItemEvent = function(link) {
+  link.addEventListener("click", function(e) {
+    const listItem = link.closest(".list > li");
+    const list = link.closest(".list");
+    const listItems = list.querySelectorAll("ol > li");
+    if (listItems.length > 1) {
+      listItem.remove();
+    }
+    e.preventDefault;
+  });
+};
+
+const deleteListItemLinks = document.querySelectorAll(".list .delete");
+
+deleteListItemLinks.forEach(function(link) {
+  deleteListItemEvent(link);
+});
+
+// Faye
+
+// http://localhost:5000/faye \
+// -d 'message={"channel":"/messages", "data": "hello", "ext": {"token": TOKEN}}'
 //
 // const client = new Faye.Client("http://localhost:5000/faye");
 //

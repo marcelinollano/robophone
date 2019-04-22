@@ -66,14 +66,14 @@ end
 
 DB.create_table?(:calls) do
   primary_key :id
-  foreign_key :story_id,   :stories
-  foreign_key :contact_id, :contacts
+  foreign_key :story_id, :stories
   Integer  :order
   String   :audio
   String   :transcript
   String   :status
   DateTime :created_at
   DateTime :updated_at
+  Integer  :contact_id
   index    :id, :unique => true
 end
 
@@ -85,6 +85,6 @@ class Call < Sequel::Model
 
   def validate
     super
-    validates_presence([:audio, :transcript, :status, :order])
+    validates_presence([:order])
   end
 end
