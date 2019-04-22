@@ -114,7 +114,7 @@ form {
 form .fields {
   display: flex;
   width: 100%;
-  margin-bottom: 1rem;
+  margin-bottom: 2rem;
 }
 
 form .fields:last-child {
@@ -154,9 +154,9 @@ form input[type="number"] {
 }
 
 form select {
-  font-size: 1.8rem;
+  font-size: 3rem;
   margin-right: 1.5rem;
-  min-width: 20rem;
+  min-width: 50%;
 }
 
 form .list {

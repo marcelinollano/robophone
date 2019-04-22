@@ -59,8 +59,9 @@ maskPhones(document.getElementsByClassName("phone"));
 const addListItem = function(link) {
   const listItem = link.closest("ol > li");
   const listItemCopy = listItem.cloneNode(true);
+  const hiddenInput = listItemCopy.querySelectorAll('input[type="hidden"]')[0];
+  hiddenInput.value = "";
   const select = listItemCopy.querySelectorAll("select")[0];
-  select.name = "calls[]";
   const options = select.querySelectorAll("option");
   options.forEach(function(option) {
     option.selected = false;
@@ -87,13 +88,27 @@ addListItemLinks.forEach(function(link) {
 
 // Delete list items
 
+const checkVisible = function(elements) {
+  let count = 0;
+  elements.forEach(function(element) {
+    if (element.style.display !== "none") {
+      count += 1;
+    }
+  });
+  return count;
+};
+
 const deleteListItemEvent = function(link) {
   link.addEventListener("click", function(e) {
     const listItem = link.closest(".list > li");
     const list = link.closest(".list");
     const listItems = list.querySelectorAll("ol > li");
-    if (listItems.length > 1) {
-      listItem.remove();
+    if (checkVisible(listItems) > 1) {
+      const options = listItem.querySelectorAll("option");
+      options.forEach(function(option) {
+        option.selected = false;
+      });
+      listItem.style.display = "none";
     }
     e.preventDefault;
   });

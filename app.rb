@@ -64,11 +64,7 @@ class App < Sinatra::Base
     auth_basic!
     begin
       contact = Contact.first(:id => params[:id])
-      contact.update({
-        :name  => params[:name],
-        :phone => params[:phone],
-        :rings => params[:rings],
-      })
+      contact.update(contact_from(params))
       redirect('/contacts')
     rescue
       not_found
@@ -115,14 +111,7 @@ class App < Sinatra::Base
   post('/stories') do
     auth_basic!
     begin
-      Story.create({
-        :name        => params[:name],
-        :text        => params[:text],
-        :phone       => params[:phone],
-        :queued      => params[:queued],
-        :ringing     => params[:ringing],
-        :in_progress => params[:in_progress]
-      })
+      Story.create(story_from(params))
       redirect('/stories')
     rescue
       bad_request
@@ -168,36 +157,14 @@ class App < Sinatra::Base
 
   put('/stories/:id') do
     auth_basic!
-    # begin
+    begin
       story = Story.first(:id => params[:id])
-
-      story.update({
-        :name        => params[:name],
-        :text        => params[:text],
-        :phone       => params[:phone],
-        :queued      => params[:queued],
-        :ringing     => params[:ringing],
-        :in_progress => params[:in_progress]
-      })
-
-      # story.calls.each do |call|
-      #   call.delete if params[:calls].include?(call.id)
-      # end
-
-      # "#{params[:calls].keys.select { |key| key.to_i == story.calls.first.id}.any?}"
-
-      params[:calls].each_with_index do |call, i|
-        Call.create({
-          :story_id => story.id,
-          :contact_id => call,
-          :order => i + 1,
-        })
-      end
-
+      story.update(story_from(params))
+      update_calls(story, params)
       redirect(params[:from])
-    # rescue
-    #   not_found
-    # end
+    rescue
+      not_found
+    end
   end
 
   delete('/stories/:id') do
@@ -249,6 +216,54 @@ private
   def auth_token!(token)
     unless token == ENV['APP_TOKEN']
       unauthorized
+    end
+  end
+
+  def contacts_from(params)
+    {
+      :name  => params[:name],
+      :phone => params[:phone],
+      :rings => params[:rings]
+    }
+  end
+
+  def story_from(params)
+    {
+      :name        => params[:name],
+      :text        => params[:text],
+      :phone       => params[:phone],
+      :queued      => params[:queued],
+      :ringing     => params[:ringing],
+      :in_progress => params[:in_progress]
+    }
+  end
+
+  def update_calls(story, params)
+    calls = []
+    params[:calls_ids].each_with_index do |id, i|
+      calls << {:id => id, :contact_id => params[:contacts_ids][i] }
+    end
+    count = 1
+    calls.each_with_index do |c|
+      call = Call.first(:id => c[:id])
+      opts = {
+        :story_id => story.id,
+        :contact_id => c[:contact_id],
+        :order => count
+      }
+      if call
+        if !c[:contact_id].strip.empty?
+          call.update(opts)
+          count = count + 1
+        else
+          call.delete
+        end
+      else
+        if !c[:contact_id].strip.empty?
+          Call.create(opts)
+          count = count + 1
+        end
+      end
     end
   end
 
