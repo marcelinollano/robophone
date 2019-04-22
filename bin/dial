@@ -45,11 +45,6 @@ def halt(call)
   call.update(status: 'completed')
 end
 
-def report(request)
-  call = query(request)
-  return(call)
-end
-
 def continue?(request, status, duration, lag=10)
   limit = Time.now.utc + duration - lag
   response = loop do

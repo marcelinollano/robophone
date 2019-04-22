@@ -7,9 +7,7 @@ require 'twilio-ruby'
 require 'dotenv'
 Dotenv.load
 
-$stdout.sync = true
-account_sid  = ENV['TWILIO_ACCOUNT_SID']
-auth_token   = ENV['TWILIO_AUTH_TOKEN']
+# USAGE: ./bin/cmd --from "+34646446543" --to "+34646446543" --text "Esto es una prueba"
 
 opts = {}
 OptionParser.new do |opt|
@@ -17,16 +15,6 @@ OptionParser.new do |opt|
   opt.on('--to TO')     { |o| opts[:to]   = o }
   opt.on('--text TEXT') { |o| opts[:text] = CGI.escape(o) }
 end.parse!
-
-params = {
-  :record => true,
-  :url   => "#{ENV['APP_URL']}/voice.xml?token=#{ENV['APP_TOKEN']}&text=#{opts[:text]}",
-  :to    => opts[:to],
-  :from  => opts[:from]
-}
-
-@client = Twilio::REST::Client.new(account_sid, auth_token)
-request = @client.calls.create(params)
 
 def format(input)
   return (input.capitalize.rjust(10, ' ')) if input.kind_of?(String)
@@ -54,33 +42,43 @@ def continue?(request, status, duration, lag=10)
   limit = Time.now.utc + duration - lag
   response = loop do
     call  = query(request)
-
     puts("#{format('status')}: #{call.status.capitalize}")
-
     break(true) if (status != call.status)
-
     if (status == 'completed')
       puts("#{format('status')}: Halt!")
       halt(call)
       break(false)
     end
-
     if (Time.now.utc > limit)
       puts("#{format('status')}: Halt!")
       halt(call)
       break(false)
     end
   end
-
   return(response)
 end
 
-puts("#{format('calling')}: #{params[:to]}")
-
-if continue?(request, 'queued', 20)
-  if continue?(request, 'ringing', 20)
-     continue?(request, 'in-progress', 40)
-  end
+begin
+  @client = Twilio::REST::Client.new(ENV['TWILIO_ACCOUNT_SID'], ENV['TWILIO_AUTH_TOKEN'])
+  params = {
+    :record => true,
+    :url   => "#{ENV['APP_URL']}/voice.xml?token=#{ENV['APP_TOKEN']}&text=#{opts[:text]}",
+    :to    => opts[:to],
+    :from  => opts[:from]
+  }
+  request = @client.calls.create(params)
+rescue
+  puts("#{format('error')}: The call couldn't be created")
 end
 
-report(request)
+begin
+  puts("#{format('calling')}: #{params[:to]}")
+  if continue?(request, 'queued', 20)
+    if continue?(request, 'ringing', 20)
+       continue?(request, 'in-progress', 40)
+    end
+  end
+  report(request)
+rescue
+  puts("#{format('error')}: The call proccess failed")
+end

@@ -124,6 +124,7 @@ class App < Sinatra::Base
     auth_basic!
     begin
       @story = Story.first(:id => params[:id])
+      @calls = Call.where(:story_id => @story.id).order(:order)
       erb(:'stories/show')
     rescue
       not_found
@@ -174,6 +175,18 @@ class App < Sinatra::Base
     begin
       story = Story.find(:id => params[:id])
       story.destroy
+      headers("Access-Control-Allow-Origin" => "*")
+      return('true')
+    rescue
+      not_found
+    end
+  end
+
+  delete('/call/:id') do
+    auth_token!(params[:token])
+    begin
+      call = Call.find(:id => params[:id])
+      call.destroy
       headers("Access-Control-Allow-Origin" => "*")
       return('true')
     rescue

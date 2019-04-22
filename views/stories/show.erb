@@ -8,5 +8,58 @@
     <%= @story.name %>
     <a href="/stories/<%= @story.id %>/edit?from=/stories/<%= @story.id %>">Edit</a>
   </h1>
+
   <p><%= @story.text %></p>
+
+  <% if @calls.any? %>
+    <table>
+      <tr>
+        <th>No</th>
+        <th>Name</th>
+        <th>Transcript</th>
+        <th>Audio</th>
+        <th>Status</th>
+        <th></th>
+      </tr>
+      <% @calls.each_with_index do |call, i| %>
+        <tr>
+          <td><%= i + 1 %></td>
+          <td>
+            <% if call.contact %>
+              📞 <%= call.contact.name %> (<%= call.contact.rings %>)
+            <% else %>
+              💥 Random contact
+            <% end %>
+          </td>
+          <td>
+            <% if call.transcript %>
+              <%= call.transcript %>
+            <% else %>
+              n/a
+            <% end %>
+          </td>
+          <td>
+            <% if call.audio %>
+              <a href="<%= call.audio %>" class="play">Play</a>
+            <% else %>
+              n/a
+            <% end %>
+          </td>
+          <td>
+            <% if call.status %>
+              <%= call.status %>
+            <% else %>
+              n/a
+            <% end %>
+          </td>
+          <td>
+            <ul class="actions">
+              <li><a href="" class="edit">Go</a></li>
+              <li><a href="/call/<%= call.id %>" class="delete">Delete</a></li>
+            </ul>
+          </td>
+        </tr>
+      <% end %>
+    </table>
+  <% end %>
 </main>

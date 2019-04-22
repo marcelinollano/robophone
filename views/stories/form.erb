@@ -46,7 +46,7 @@
           <li>
             <select name="contacts_ids[]">
               <option value="">Select contact…</option>
-              <option value="0" <%= "selected=selected" if call.contact_id == 0 %>>✨ Random contact</option>
+              <option value="0" <%= "selected=selected" if call.contact_id == 0 %>>💥 Random contact</option>
               <% for contact in @contacts %>
                 <option value="<%= contact.id %>" <%= "selected=selected" if contact.id == call.contact_id %>>
                   📞 <%= contact.name %> (<%= contact.rings %>)
@@ -64,7 +64,7 @@
         <li>
           <select name="contacts_ids[]">
             <option value="" selected="selected">Select contact…</option>
-            <option value="0">✨ Random contact</option>
+            <option value="0">💥 Random contact</option>
             <% for contact in @contacts %>
               <option value="<%= contact.id %>">
                 📞 <%= contact.name %> (<%= contact.rings %>)
