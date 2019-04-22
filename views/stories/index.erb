@@ -1,9 +1,9 @@
-<div class="header">
+<header class="header">
   <%= erb(:'nav') %>
   <a href="/stories/new?from=/stories" class="primary">New story</a>
-</div>
+</header>
 
-<div class="header">
+<main class="main">
   <% if @stories.any? %>
     <table>
       <tr>
@@ -16,15 +16,15 @@
         <td><a href="/stories/<%= story.id %>"><%= story.name %></a></td>
         <td><%= story.text %></td>
         <td>
-          <span class="menu">
-            <a href="/stories/<%= story.id %>/edit?from=/stories" class="edit">Edit</a>
-            <a href="/stories/<%= story.id %>" class="delete">Delete</a>
-          </span>
+          <ul class="actions">
+            <li><a href="/stories/<%= story.id %>/edit?from=/stories" class="edit">Edit</a></li>
+            <li><a href="/stories/<%= story.id %>" class="delete">Delete</a></li>
+          </ul>
         </td>
       </tr>
       <% end %>
     </table>
   <% else %>
-    <p>No stories yet.</p>
+    <p>Nothing to see here yet.</p>
   <% end %>
-</div>
+</main>

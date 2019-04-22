@@ -103,8 +103,9 @@ class App < Sinatra::Base
   get('/stories/new') do
     auth_basic!
     begin
-      @from  = params[:from]
-      @story = Story.new
+      @from     = params[:from]
+      @contacts = Contact.all
+      @story    = Story.new
       erb(:'stories/new')
     rescue
       bad_request
@@ -114,7 +115,14 @@ class App < Sinatra::Base
   post('/stories') do
     auth_basic!
     begin
-      Story.create(params)
+      Story.create({
+        :name        => params[:name],
+        :text        => params[:text],
+        :phone       => params[:phone],
+        :queued      => params[:queued],
+        :ringing     => params[:ringing],
+        :in_progress => params[:in_progress]
+      })
       redirect('/stories')
     rescue
       bad_request
@@ -134,8 +142,9 @@ class App < Sinatra::Base
   get('/stories/:id/edit') do
     auth_basic!
     begin
-      @from  = params[:from]
-      @story = Story.first(:id => params[:id])
+      @from     = params[:from]
+      @contacts = Contact.all
+      @story    = Story.first(:id => params[:id])
       erb(:'stories/edit')
     rescue
       not_found

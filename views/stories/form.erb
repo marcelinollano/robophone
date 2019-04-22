@@ -1,61 +1,67 @@
-<p>
+<div class="fields">
   <label for="name">Name</label>
-  <span class="field">
+  <span class="inputs">
     <input name="name" type="text" id="name" value="<%= story.name %>">
   </span>
-</p>
-<p>
+</div>
+<div class="fields">
   <label for="text">Beginning</label>
-  <span class="field">
+  <span class="inputs">
     <textarea name="text" id="text"><%= story.text %></textarea>
   </span>
-</p>
-<p>
+</div>
+<div class="fields">
   <label for="phone">Phone</label>
-  <span class="field">
+  <span class="inputs">
     <input name="phone" type="tel" id="phone" value="<%= story.phone ||= ENV['DEFAULT_PHONE'] %>">
   </span>
-</p>
-<p>
+</div>
+<div class="fields">
   <label for="queued">Queued</label>
-  <span class="field">
+  <p class="inputs">
     <input name="queued" type="number" id="queued" value="<%= story.queued ||= ENV['DEFAULT_QUEUED'] %>">
     secs
-  </span>
-</p>
-<p>
+  </p>
+</div>
+<div class="fields">
   <label for="ringing">Ringing</label>
-  <span class="field">
+  <p class="inputs">
     <input name="ringing" type="number" id="ringing" value="<%= story.ringing ||= ENV['DEFAULT_RINGING'] %>">
     secs
-  </span>
-</p>
-<p>
+  </p>
+</div>
+<div class="fields">
   <label for="in_progress">In progress</label>
-  <span class="field">
+  <p class="inputs">
     <input name="in_progress" type="number" id="in_progress" value="<%= story.in_progress ||= ENV['DEFAULT_IN_PROGRESS'] %>">
     secs
+  </p>
+</div>
+<div class="fields">
+  <label for="calls">Calls</label>
+  <span class="inputs">
+    <ol class="list">
+      <li>
+        <select name="calls[]">
+          <option value="random">Random</option>
+          <% for contact in @contacts %>
+            <option value="<%= contact.id %>">
+              <%= contact.name %> (<%= contact.phone[0...-6] << '******' %>)
+            </option>
+          <% end %>
+        </select>
+        <ul class="actions">
+          <li><a href="#" class="add">Add</a></li>
+          <li><a href="#" class="delete">Delete</a></li>
+        </ul>
+      </li>
+    </ol>
   </span>
-</p>
+</div>
 <hr>
-<h2>Calls</h2>
-<p>
-  <label for="in_progress">Step 1</label>
-  <span class="field">
-    <input name="in_progress" type="number" value="1">
-    <select name="calls[]">
-      <option value="random">Random</option>
-    </select>
-  </span>
-  <span class="menu">
-    <a href="#" class="add">Add</a>
-    <a href="#" class="delete">Delete</a>
-  </span>
-</p>
-<hr>
-<p>
-  <span class="buttons">
-    <input type="submit" value="Save story">
-    <a href="<%= @from %>" class="secondary">Cancel</a>
-  </span>
-</p>
+<div class="fields">
+  <ul class="buttons">
+    <li><input type="submit" value="Save story"></li>
+    <li><a href="<%= @from %>" class="secondary">Cancel</a></li>
+  </ul>
+</div>

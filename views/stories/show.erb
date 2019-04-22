@@ -1,9 +1,9 @@
-<header>
+<header class="header">
   <%= erb(:'nav') %>
   <a href="/stories/<%= @story.id %>/dial" class="primary">Dial story</a>
 </header>
 
-<main>
+<main class="main">
   <h1>
     <%= @story.name %>
     <a href="/stories/<%= @story.id %>/edit?from=/stories/<%= @story.id %>">Edit</a>

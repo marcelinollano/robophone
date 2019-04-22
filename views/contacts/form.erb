@@ -1,26 +1,26 @@
-<p>
+<div class="fields">
   <label for="name">Name</label>
-  <span class="field">
+  <p class="inputs">
     <input name="name" type="text" id="name" value="<%= contact.name %>">
-  </span>
-</p>
-<p>
+  </p>
+</div>
+<div class="fields">
   <label for="phone">Phone</label>
-  <span class="field">
+  <p class="inputs">
     <input name="phone" type="tel" id="phone" value="<%= contact.phone %>">
-  </span>
-</p>
-<p>
+  </p>
+</div>
+<div class="fields">
   <label for="rings">Rings</label>
-  <span class="field">
+  <p class="inputs">
     <input name="rings" type="number" id="rings" value="<%= contact.rings ||= ENV['DEFAULT_RINGS'] %>">
     maximum
-  </span>
-</p>
+  </p>
+</div>
 <hr>
-<p>
-  <span class="buttons">
-    <input type="submit" value="Save contact">
-    <a href="/contacts" class="secondary">Cancel</a>
-  </span>
-</p>
+<div class="fields">
+  <ul class="buttons">
+    <li><input type="submit" value="Save contact"></li>
+    <li><a href="/contacts" class="secondary">Cancel</a></li>
+  </ul>
+</div>

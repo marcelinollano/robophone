@@ -1,7 +1,8 @@
 // script.js
 
-function deleteItem(url, callback) {
-  console.log(url + "?token=" + envToken);
+// Delete resoruces
+
+const deleteResourceRequest = function(url, callback) {
   const r = new XMLHttpRequest();
   r.open("DELETE", url + "?token=" + envToken, true);
   r.onreadystatechange = function() {
@@ -9,37 +10,60 @@ function deleteItem(url, callback) {
     callback(r.responseText);
   };
   r.send();
-}
+};
 
-const deleteLinks = document.getElementsByClassName("delete");
+const deleteResourceEvents = function(links) {
+  for (let i = links.length - 1; i >= 0; i--) {
+    links[i].addEventListener(
+      "click",
+      function(e) {
+        const link = this;
+        const url = this.href;
+        deleteResourceRequest(url, function(res) {
+          if (res == "true") {
+            const table = document.querySelectorAll("table")[0];
+            if (table.querySelectorAll("tr").length == 2) {
+              table.remove();
+              const main = document.querySelectorAll("main")[0];
+              const p = document.createElement("P");
+              p.innerHTML = "Nothing to see here yet.";
+              main.appendChild(p);
+            } else {
+              link.closest("tr").remove();
+            }
+          }
+        });
+        e.preventDefault();
+      },
+      false
+    );
+  }
+};
 
-for (let i = deleteLinks.length - 1; i >= 0; i--) {
-  deleteLinks[i].addEventListener(
-    "click",
-    function(e) {
-      const link = this;
-      const url = this.href;
-      deleteItem(url, function(res) {
-        if (res == "true") {
-          link.closest("tr").classList.toggle("is-marked");
-          setTimeout(function() {
-            link.closest("tr").classList.toggle("is-deleted");
-          }, 400);
-        }
-      });
-      e.preventDefault();
-    },
-    false
-  );
-}
+deleteResourceEvents(document.querySelectorAll("table .delete"));
 
-const phones = document.getElementsByClassName("phone");
+// Mask phones
 
-for (let i = 0; i < phones.length; i++) {
-  text = phones[i].innerHTML;
-  text = text.replace(/\d{6}$/, "******");
-  phones[i].innerHTML = text;
-}
+const maskPhones = function(phones) {
+  for (let i = 0; i < phones.length; i++) {
+    text = phones[i].innerHTML;
+    text = text.replace(/\d{6}$/, "******");
+    phones[i].innerHTML = text;
+  }
+};
+
+maskPhones(document.getElementsByClassName("phone"));
+
+// const addList = document.querySelectorAll(".list .add");
+//
+// for (let i = 0; i < addList.length; i++) {
+//   addList[i].addEventListener("click", function(e) {
+//     const item = addList[i].closest("ol > li");
+//     const dup = item.cloneNode(true);
+//     item.after(dup);
+//     e.preventDefault;
+//   });
+// }
 
 // http://localhost:5000/faye -d 'message={"channel":"/messages", "data": "hello", "ext": {"token": TOKEN}}'
 //
