@@ -18,6 +18,7 @@ class Contact < Sequel::Model
   plugin(:timestamps, :update_on_create => true)
   plugin(:validation_helpers)
   one_to_many :calls
+  plugin(:association_dependencies, :calls => :destroy)
 
   def validate
     super
@@ -48,6 +49,7 @@ class Story < Sequel::Model
   plugin(:timestamps, :update_on_create => true)
   plugin(:validation_helpers)
   one_to_many :calls
+  plugin(:association_dependencies, :calls => :destroy)
 
   def validate
     super

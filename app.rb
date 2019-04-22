@@ -102,6 +102,7 @@ class App < Sinatra::Base
       @from     = params[:from]
       @contacts = Contact.all
       @story    = Story.new
+      @calls    = []
       erb(:'stories/new')
     rescue
       bad_request
@@ -111,7 +112,8 @@ class App < Sinatra::Base
   post('/stories') do
     auth_basic!
     begin
-      Story.create(story_from(params))
+      story = Story.create(story_from(params))
+      update_calls(story, params)
       redirect('/stories')
     rescue
       bad_request
@@ -256,7 +258,7 @@ private
           call.update(opts)
           count = count + 1
         else
-          call.delete
+          call.destroy
         end
       else
         if !c[:contact_id].strip.empty?
