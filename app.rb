@@ -141,15 +141,15 @@ class App < Sinatra::Base
 
   get('/stories/:id/edit') do
     auth_basic!
-    # begin
+    begin
       @from     = params[:from]
       @contacts = Contact.all
       @calls    = Call.order(:order)
       @story    = Story.first(:id => params[:id])
       erb(:'stories/edit')
-    # rescue
-    #   not_found
-    # end
+    rescue
+      not_found
+    end
   end
 
   get('/stories/:id/dial') do
@@ -184,8 +184,6 @@ class App < Sinatra::Base
       #   call.delete if params[:calls].include?(call.id)
       # end
 
-      # "#{params[:calls]}"
-
       # "#{params[:calls].keys.select { |key| key.to_i == story.calls.first.id}.any?}"
 
       params[:calls].each_with_index do |call, i|
@@ -195,8 +193,8 @@ class App < Sinatra::Base
           :order => i + 1,
         })
       end
-      #
-      # redirect(params[:from])
+
+      redirect(params[:from])
     # rescue
     #   not_found
     # end
