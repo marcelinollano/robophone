@@ -17,7 +17,7 @@
         <th>No</th>
         <th>Name</th>
         <th>Transcript</th>
-        <th>Audio</th>
+        <th>Recording</th>
         <th>Status</th>
         <th></th>
       </tr>
@@ -39,8 +39,8 @@
             <% end %>
           </td>
           <td>
-            <% if call.audio %>
-              <a href="<%= call.audio %>" class="play">Play</a>
+            <% if call.recording %>
+              <a href="<%= call.recording %>" class="play">Play</a>
             <% else %>
               n/a
             <% end %>

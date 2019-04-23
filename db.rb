@@ -71,7 +71,8 @@ DB.create_table?(:calls) do
   primary_key :id
   foreign_key :story_id, :stories
   Integer  :order
-  String   :audio
+  Integer  :duration
+  String   :recording
   String   :transcript
   String   :status
   DateTime :created_at
@@ -85,9 +86,4 @@ class Call < Sequel::Model
   plugin(:validation_helpers)
   many_to_one :story
   many_to_one :contact
-
-  def validate
-    super
-    validates_presence([:order])
-  end
 end

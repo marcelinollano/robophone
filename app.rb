@@ -26,7 +26,7 @@ class App < Sinatra::Base
       @contacts = Contact.all
       erb(:'contacts/index')
     rescue
-      not_found
+      bad_request
     end
   end
 
@@ -46,7 +46,7 @@ class App < Sinatra::Base
       @contact = Contact.first(:id => params[:id])
       erb(:'contacts/edit')
     rescue
-      not_found
+      bad_request
     end
   end
 
@@ -67,7 +67,7 @@ class App < Sinatra::Base
       contact.update(contact_from(params))
       redirect('/contacts')
     rescue
-      not_found
+      bad_request
     end
   end
 
@@ -79,7 +79,7 @@ class App < Sinatra::Base
       headers("Access-Control-Allow-Origin" => "*")
       return('true')
     rescue
-      not_found
+      bad_request
     end
   end
 
@@ -92,7 +92,7 @@ class App < Sinatra::Base
       @stories = Story.all
       erb(:'stories/index')
     rescue
-      not_found
+      bad_request
     end
   end
 
@@ -127,7 +127,7 @@ class App < Sinatra::Base
       @calls = Call.where(:story_id => @story.id).order(:order)
       erb(:'stories/show')
     rescue
-      not_found
+      bad_request
     end
   end
 
@@ -140,7 +140,7 @@ class App < Sinatra::Base
       @story    = Story.first(:id => params[:id])
       erb(:'stories/edit')
     rescue
-      not_found
+      bad_request
     end
   end
 
@@ -148,13 +148,10 @@ class App < Sinatra::Base
     auth_basic!
     begin
       story = Story.first(:id => params[:id])
-      from  = '+34646446543'
-      to    = '+34646446543'
-      text  = story.text
-      Thread.new { system(`./bin/dial --from "#{from}" --to "#{to}" --text "#{text}"`) }
-      "Dialing NOW!"
+      Thread.new { system(`./bin/dial --id "#{story.id}"`) }
+      redirect("/stories/#{params[:id]}")
     rescue
-      not_found
+      bad_request
     end
   end
 
@@ -166,7 +163,7 @@ class App < Sinatra::Base
       update_calls(story, params)
       redirect(params[:from])
     rescue
-      not_found
+      bad_request
     end
   end
 
@@ -178,7 +175,7 @@ class App < Sinatra::Base
       headers("Access-Control-Allow-Origin" => "*")
       return('true')
     rescue
-      not_found
+      bad_request
     end
   end
 
@@ -190,7 +187,7 @@ class App < Sinatra::Base
       headers("Access-Control-Allow-Origin" => "*")
       return('true')
     rescue
-      not_found
+      bad_request
     end
   end
 
