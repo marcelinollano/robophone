@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Response>
   <Play><%= ENV['APP_URL'] %>/intro.mp3</Play>
-  <Say voice="Polly.Conchita" language="<%= @language ||= <%= ENV['DEFAULT_LANGUAGE'] %> %>"><%= @text %></Say>
+  <Say voice="Polly.Conchita" language="<%= @language ||= ENV['DEFAULT_LANGUAGE'] %>"><%= @text %></Say>
   <Play><%= ENV['APP_URL'] %>/beep.mp3</Play>
 </Response>

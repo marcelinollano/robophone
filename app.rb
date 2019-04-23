@@ -199,7 +199,8 @@ class App < Sinatra::Base
   post('/voice.xml') do
     auth_token!(params[:token])
     if params[:text] && !params[:text].strip.empty?
-      @text = CGI.unescape(params[:text])
+      @text     = CGI.unescape(params[:text])
+      @language = params[:language]
       content_type('text/xml')
       erb(:'voices/intro', :layout => false)
     else
