@@ -2,4 +2,7 @@
 <Response>
   <Play><%= ENV['APP_URL'] %>/intro.mp3</Play>
   <Say voice="Polly.Conchita" language="<%= @language ||= ENV['DEFAULT_LANGUAGE'] %>"><%= @text %></Say>
+  <Play><%= ENV['APP_URL'] %>/beep.mp3</Play>
+  <Record timeout="2" />
+  <Hangup />
 </Response>

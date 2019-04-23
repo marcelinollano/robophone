@@ -18,21 +18,6 @@ OptionParser.new do |opt|
   opt.on('--id ID') { |o| opts[:id] = o }
 end.parse!
 
-@story   = Story.first(:id => opts[:id])
-@call    = @story.calls.first
-text     = CGI.escape(@story.text)
-language = @story.language ||= ENV['DEFAULT_LANGUAGE']
-
-url      = "#{ENV['APP_URL']}/voice.xml?token=#{ENV['APP_TOKEN']}&language=#{language}&text=#{text}"
-params   = { :record => true, :url => url, :from => @story.phone, :to => @call.contact.phone }
-@client = Twilio::REST::Client.new(ENV['TWILIO_ACCOUNT_SID'], ENV['TWILIO_AUTH_TOKEN'])
-request = @client.calls.create(params)
-
-def ping(id)
-  params = 'message={"channel":"/stories/'+id.to_s+'","data": ""}'
-  Curl.post("#{ENV['APP_URL']}/faye", params)
-end
-
 def query(request, debounce = 5)
   time  = Time.now.utc
   call  = @client.calls.list.first {|call| call.sid == request.sid}
@@ -42,25 +27,9 @@ def query(request, debounce = 5)
   return(call)
 end
 
-def halt(call)
-  call.update(status: 'completed')
-end
-
-def continue?(request, status, duration)
-  limit = Time.now.utc + duration
-  response = loop do
-    call  = query(request)
-    break(true) if (status != call.status)
-    if (status == 'completed')
-      halt(call)
-      break(false)
-    end
-    if (Time.now.utc > limit)
-      halt(call)
-      break(false)
-    end
-  end
-  return(response)
+def ping(id)
+  params = 'message={"channel":"/stories/'+id.to_s+'","data": ""}'
+  Curl.post("#{ENV['APP_URL']}/faye", params)
 end
 
 def report(request)
@@ -77,18 +46,20 @@ def report(request)
   ping(@call.id)
 end
 
-begin
-  ping(@call.id)
-  if continue?(request, 'queued', @story.queued)
-    ping(@call.id)
-    if continue?(request, 'ringing', @story.ringing)
-      ping(@call.id)
-      continue?(request, 'in-progress', @story.in_progress)
-      ping(@call.id)
-    end
-  end
-  report(request)
-  ping(@call.id)
-rescue
-  puts("Something went wrong!")
+@story   = Story.first(:id => opts[:id])
+@call    = @story.calls.first
+text     = CGI.escape(@story.text)
+language = @story.language ||= ENV['DEFAULT_LANGUAGE']
+
+url      = "#{ENV['APP_URL']}/voice.xml?token=#{ENV['APP_TOKEN']}&language=#{language}&text=#{text}"
+params   = { :record => true, :url => url, :from => @story.phone, :to => @call.contact.phone }
+@client = Twilio::REST::Client.new(ENV['TWILIO_ACCOUNT_SID'], ENV['TWILIO_AUTH_TOKEN'])
+request = @client.calls.create(params)
+
+loop do
+  call = query(request)
+  break if (call.status == 'completed')
+  sleep(1)
 end
+
+report(request)
