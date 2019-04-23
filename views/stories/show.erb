@@ -73,7 +73,7 @@
 
 <script src="/faye/client.js" charset="utf-8"></script>
 <script type="text/javascript">
-  const client = new Faye.Client("<%= ENV['APP_URL']} %>/faye");
+  const client = new Faye.Client("<%= ENV['APP_URL'] %>/faye");
   const subscription = client.subscribe(window.location.pathname, function() {
     location.reload();
   });
