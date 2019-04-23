@@ -36,7 +36,6 @@ DB.create_table?(:stories) do
   String   :name
   String   :text
   String   :phone
-  String   :status
   String   :language
   Integer  :record_time
   DateTime :created_at
@@ -54,12 +53,9 @@ class Story < Sequel::Model
     super
     validates_presence([:name, :text, :phone, :record_time, :language])
     validates_unique([:name, :text])
-    errors.add(:phone, "#{self.phone}") if Phonelib.invalid_for_country?(self.phone, 'ES')
-  end
-
-  def before_create
-    super
-    self.status = 'unlocked'
+    if Phonelib.invalid_for_country?(self.phone, ENV['language'][-2..-1])
+      errors.add(:phone, "#{self.phone}")
+    end
   end
 end
 
