@@ -122,29 +122,29 @@ deleteListItemLinks.forEach(function(link) {
 
 // Play recording
 
-// Array.prototype.forEach.call(
-//   document.querySelectorAll("[data-recording]"),
-//   function(recording) {
-//     recording.audio = new Audio(recording.href);
-//     recording.setAttribute("role", "button");
-//     recording.setAttribute("aria-pressed", "false");
-//   }
-// );
-//
-// document.addEventListener(
-//   "click",
-//   function(event) {
-//     if (!event.target.hasAttribute("data-recording")) return;
-//     event.preventDefault();
-//     if (event.target.getAttribute("aria-pressed") == "true") {
-//       event.target.audio.pause();
-//       event.target.setAttribute("aria-pressed", "false");
-//       event.target.innerHTML = "Play";
-//       return;
-//     }
-//     event.target.audio.play();
-//     event.target.setAttribute("aria-pressed", "true");
-//     event.target.innerHTML = "Pause";
-//   },
-//   false
-// );
+Array.prototype.forEach.call(
+  document.querySelectorAll("[data-recording]"),
+  function(recording) {
+    recording.audio = new Audio(recording.href);
+    recording.setAttribute("role", "button");
+    recording.setAttribute("aria-pressed", "false");
+  }
+);
+
+document.addEventListener(
+  "click",
+  function(event) {
+    if (!event.target.hasAttribute("data-recording")) return;
+    event.preventDefault();
+    if (event.target.getAttribute("aria-pressed") == "true") {
+      event.target.audio.pause();
+      event.target.setAttribute("aria-pressed", "false");
+      event.target.innerHTML = "Play";
+      return;
+    }
+    event.target.audio.play();
+    event.target.setAttribute("aria-pressed", "true");
+    event.target.innerHTML = "Pause";
+  },
+  false
+);
