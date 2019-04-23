@@ -37,7 +37,6 @@ def query(request, debounce = 5)
   time  = Time.now.utc
   call  = @client.calls.list.first {|call| call.sid == request.sid}
   @call.update(:status => call.status)
-  ping(@call.id)
   delay = debounce - (Time.now.utc - time)
   sleep(delay) if delay > 0
   return(call)
@@ -79,12 +78,17 @@ def report(request)
 end
 
 begin
+  ping(@call.id)
   if continue?(request, 'queued', @story.queued)
+    ping(@call.id)
     if continue?(request, 'ringing', @story.ringing)
-       continue?(request, 'in-progress', @story.in_progress)
+      ping(@call.id)
+      continue?(request, 'in-progress', @story.in_progress)
+      ping(@call.id)
     end
   end
   report(request)
+  ping(@call.id)
 rescue
   puts("Something went wrong!")
 end
