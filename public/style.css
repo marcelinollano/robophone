@@ -152,22 +152,27 @@ form textarea {
   height: 4.6rem;
 }
 
-form input[type="number"] {
-  cursor: pointer;
+form input[type="number"],
+form .short {
   margin-right: 0.5rem;
-  width: 5rem;
+  width: 6rem;
 }
 
 form select {
   font-size: 3rem;
   margin-right: 1.5rem;
-  min-width: 50%;
 }
 
 form .list {
   margin: 0;
   padding: 0;
   padding-left: 3rem;
+}
+
+form .list select {
+  font-size: 3rem;
+  margin-right: 1.5rem;
+  min-width: 50%;
 }
 
 form hr {
@@ -247,7 +252,9 @@ form input[type="submit"]:hover {
 }
 
 .is-marked {
-  opacity: 0.4;
+  -webkit-transition: opacity 0.1s;
+  transition: opacity 0.1s;
+  opacity: 0;
 }
 
 .is-deleted {

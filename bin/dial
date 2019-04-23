@@ -11,28 +11,6 @@ Dotenv.load
 
 require './db.rb'
 
-story = Story.first(:id => ARGV[0])
-text  = CGI.escape(story.text)
-
-params = {
-  :record => true,
-  :url   => "#{ENV['APP_URL']}/voice.xml?token=#{ENV['APP_TOKEN']}&text=#{text}",
-  :from  => ARGV[1],
-  :to    => ARGV[2]
-}
-
-@client = Twilio::REST::Client.new(
-  ENV['TWILIO_ACCOUNT_SID'],
-  ENV['TWILIO_AUTH_TOKEN']
-)
-
-request = @client.calls.create(params)
-
-def format(input)
-  return (input.capitalize.rjust(10, ' ')) if input.kind_of?(String)
-  return (input.to_s.rjust(2, '0')) if input.kind_of?(Integer)
-end
-
 def query(request, debounce = 5)
   time  = Time.now.utc
   call  = @client.calls.list.first {|call| call.sid == request.sid}
@@ -49,22 +27,32 @@ def continue?(request, status, duration, lag=10)
   limit = Time.now.utc + duration - lag
   response = loop do
     call  = query(request)
-
     break(true) if (status != call.status)
-
     if (status == 'completed')
       halt(call)
       break(false)
     end
-
     if (Time.now.utc > limit)
       halt(call)
       break(false)
     end
   end
-
   return(response)
 end
+
+story  = Story.first(:id => ARGV[0])
+text   = CGI.escape(story.text)
+url    = "#{ENV['APP_URL']}/voice.xml?token=#{ENV['APP_TOKEN']}&language=#{ENV['DEFAULT_LANGUAGE']}&text=#{text}"
+params = {
+  :record => true,
+  :url   => url,
+  :from  => story.phone,
+  :to    => ARGV[2]
+}
+
+@client = Twilio::REST::Client.new(ENV['TWILIO_ACCOUNT_SID'], ENV['TWILIO_AUTH_TOKEN'])
+
+request = @client.calls.create(params)
 
 if continue?(request, 'queued', story.queued)
   if continue?(request, 'ringing', story.ringing)

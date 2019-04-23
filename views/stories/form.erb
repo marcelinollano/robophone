@@ -38,6 +38,13 @@
   </p>
 </div>
 <div class="fields">
+  <label for="language">Language</label>
+  <p class="inputs">
+    <input name="language" type="input" id="language" class="short" value="<%= story.language ||= ENV['DEFAULT_LANGUAGE'] %>">
+    locale
+  </p>
+</div>
+<div class="fields">
   <label for="calls">Call queue</label>
   <span class="inputs">
     <ol class="list">

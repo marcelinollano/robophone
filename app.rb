@@ -249,7 +249,8 @@ private
       :phone       => params[:phone],
       :queued      => params[:queued],
       :ringing     => params[:ringing],
-      :in_progress => params[:in_progress]
+      :in_progress => params[:in_progress],
+      :language    => params[:language]
     }
   end
 

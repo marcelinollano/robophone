@@ -59,10 +59,11 @@ def continue?(request, status, duration, lag=10)
 end
 
 begin
-  @client = Twilio::REST::Client.new(ENV['TWILIO_ACCOUNT_SID'], ENV['TWILIO_AUTH_TOKEN'])
+  @client = Twilio::REST::Client.new(ENV['TWILIO_ACCOUNT_SID'], ENV['TWILIO_AUTH_TOKEN']);
+  url = "#{ENV['APP_URL']}/voice.xml?token=#{ENV['APP_TOKEN']}&language=#{ENV['DEFAULT_LANGUAGE']}&text=#{opts[:text]}"
   params = {
     :record => true,
-    :url   => "#{ENV['APP_URL']}/voice.xml?token=#{ENV['APP_TOKEN']}&text=#{opts[:text]}",
+    :url   => url,
     :to    => opts[:to],
     :from  => opts[:from]
   }
