@@ -70,3 +70,11 @@
     </table>
   <% end %>
 </main>
+
+<script src="/faye/client.js" charset="utf-8"></script>
+<script type="text/javascript">
+  const client = new Faye.Client("/faye");
+  const subscription = client.subscribe(window.location.pathname, function() {
+    location.reload();
+  });
+</script>

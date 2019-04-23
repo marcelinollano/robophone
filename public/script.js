@@ -119,19 +119,3 @@ const deleteListItemLinks = document.querySelectorAll(".list .delete");
 deleteListItemLinks.forEach(function(link) {
   deleteListItemEvent(link);
 });
-
-// Faye
-
-// http://localhost:5000/faye \
-// -d 'message={"channel":"/messages", "data": "hello", "ext": {"token": TOKEN}}'
-//
-// const client = new Faye.Client("http://localhost:5000/faye");
-//
-// const subscription = client.subscribe("/messages", function(data) {
-//   alert(data);
-//   location.reload();
-// });
-//
-// subscription.then(function() {
-//   console.log("Subscription is now active!");
-// });

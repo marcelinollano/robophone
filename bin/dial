@@ -1,13 +1,14 @@
 #!/usr/bin/env ruby
 
 require 'cgi'
+require 'optparse'
 require 'rubygems'
 require 'twilio-ruby'
 require 'sequel'
 require 'sqlite3'
 require 'phonelib'
+require 'curb'
 require 'dotenv'
-require 'optparse'
 Dotenv.load
 
 require './db.rb'
@@ -28,10 +29,16 @@ params   = { :record => true, :url => url, :from => @story.phone, :to => @call.c
 @client = Twilio::REST::Client.new(ENV['TWILIO_ACCOUNT_SID'], ENV['TWILIO_AUTH_TOKEN'])
 request = @client.calls.create(params)
 
+def refresh(id)
+  params = 'message={"channel":"/stories/'+id.to_s+'","data": ""}'
+  Curl.post("#{ENV['APP_URL']}/faye", params)
+end
+
 def query(request, debounce = 5)
   time  = Time.now.utc
   call  = @client.calls.list.first {|call| call.sid == request.sid}
   @call.update(:status => call.status)
+  refresh(@call.id)
   delay = debounce - (Time.now.utc - time)
   sleep(delay) if delay > 0
   return(call)

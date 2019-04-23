@@ -9,6 +9,7 @@ gem 'sequel'
 gem 'sqlite3'
 gem 'phonelib'
 gem 'faye'
+gem 'curb'
 gem 'puma'
 gem 'foreman'
 
