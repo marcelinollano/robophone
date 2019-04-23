@@ -37,10 +37,10 @@ DB.create_table?(:stories) do
   String   :text
   String   :phone
   String   :status
+  String  :language
   Integer  :queued
   Integer  :ringing
   Integer  :in_progress
-  Integer  :language
   DateTime :created_at
   DateTime :updated_at
   index    :id, :unique => true
