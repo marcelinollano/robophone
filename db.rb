@@ -53,7 +53,7 @@ class Story < Sequel::Model
     super
     validates_presence([:name, :text, :phone, :record_time, :language])
     validates_unique([:name, :text])
-    if Phonelib.invalid_for_country?(self.phone, ENV['language'][-2..-1])
+    if Phonelib.invalid_for_country?(self.phone, ENV['DEFAULT_LANGUAGE'][-2..-1])
       errors.add(:phone, "#{self.phone}")
     end
   end
