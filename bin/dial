@@ -72,9 +72,9 @@ def report(request)
 end
 
 begin
-  if continue?(request, 'queued', story.queued)
-    if continue?(request, 'ringing', story.ringing)
-       continue?(request, 'in-progress', story.in_progress)
+  if continue?(request, 'queued', @story.queued)
+    if continue?(request, 'ringing', @story.ringing)
+       continue?(request, 'in-progress', @story.in_progress)
     end
   end
   report(request)
