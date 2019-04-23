@@ -17,13 +17,13 @@ OptionParser.new do |opt|
   opt.on('--id ID') { |o| opts[:id] = o }
 end.parse!
 
-@story   = Story.first(:id => ARGV[0])
+@story   = Story.first(:id => opts[:id])
 @call    = @story.calls.first
 text     = CGI.escape(@story.text)
 language = @story.language ||= ENV['DEFAULT_LANGUAGE']
 
 url      = "#{ENV['APP_URL']}/voice.xml?token=#{ENV['APP_TOKEN']}&language=#{language}&text=#{text}"
-params   = { :record => true, :url => url, :from => @story.phone, :to => @call.phone }
+params   = { :record => true, :url => url, :from => @story.phone, :to => @call.contact.phone }
 
 @client = Twilio::REST::Client.new(ENV['TWILIO_ACCOUNT_SID'], ENV['TWILIO_AUTH_TOKEN'])
 request = @client.calls.create(params)

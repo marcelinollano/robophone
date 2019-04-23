@@ -16,9 +16,10 @@
       <tr>
         <th>No</th>
         <th>Name</th>
+        <th>Status</th>
+        <th>Duration</th>
         <th>Transcript</th>
         <th>Recording</th>
-        <th>Status</th>
         <th></th>
       </tr>
       <% @calls.each_with_index do |call, i| %>
@@ -29,6 +30,20 @@
               📞 <%= call.contact.name %> (<%= call.contact.rings %>)
             <% else %>
               💥 Random contact
+            <% end %>
+          </td>
+          <td>
+            <% if call.status %>
+            <%= call.status.capitalize %>
+            <% else %>
+            n/a
+            <% end %>
+          </td>
+          <td>
+            <% if call.duration %>
+            <%= Time.at(call.duration).utc.strftime("%M:%S") %>
+            <% else %>
+            n/a
             <% end %>
           </td>
           <td>
@@ -46,15 +61,7 @@
             <% end %>
           </td>
           <td>
-            <% if call.status %>
-              <%= call.status %>
-            <% else %>
-              n/a
-            <% end %>
-          </td>
-          <td>
             <ul class="actions">
-              <li><a href="" class="edit">Go</a></li>
               <li><a href="/call/<%= call.id %>" class="delete">Delete</a></li>
             </ul>
           </td>
