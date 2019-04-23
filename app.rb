@@ -195,14 +195,14 @@ class App < Sinatra::Base
 
   post('/voice.xml') do
     auth_token!(params[:token])
-    if params[:text] && !params[:text].strip.empty?
-      @text     = CGI.unescape(params[:text])
-      @language = params[:language]
+    begin
+      @text        = CGI.unescape(params[:text])
+      @language    = params[:language]
+      @record_time = params[:record_time]
       content_type('text/xml')
-      erb(:'voices/intro', :layout => false)
-    else
-      content_type('text/xml')
-      erb(:'voices/error', :layout => false)
+      erb(:'voices/begin', :layout => false)
+    rescue
+      bad_request
     end
   end
 
@@ -245,9 +245,7 @@ private
       :name        => params[:name],
       :text        => params[:text],
       :phone       => params[:phone],
-      :queued      => params[:queued],
-      :ringing     => params[:ringing],
-      :in_progress => params[:in_progress],
+      :record_time => params[:record_time],
       :language    => params[:language]
     }
   end

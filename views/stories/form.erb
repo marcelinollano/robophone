@@ -17,23 +17,9 @@
   </span>
 </div>
 <div class="fields">
-  <label for="queued">Queued</label>
+  <label for="record_time">Record time</label>
   <p class="inputs">
-    <input name="queued" type="number" id="queued" value="<%= story.queued ||= ENV['DEFAULT_QUEUED'] %>">
-    secs
-  </p>
-</div>
-<div class="fields">
-  <label for="ringing">Ringing</label>
-  <p class="inputs">
-    <input name="ringing" type="number" id="ringing" value="<%= story.ringing ||= ENV['DEFAULT_RINGING'] %>">
-    secs
-  </p>
-</div>
-<div class="fields">
-  <label for="in_progress">In progress</label>
-  <p class="inputs">
-    <input name="in_progress" type="number" id="in_progress" value="<%= story.in_progress ||= ENV['DEFAULT_IN_PROGRESS'] %>">
+    <input name="record_time" type="number" id="record_time" value="<%= story.record_time ||= ENV['DEFAULT_RECORD_TIME'] %>">
     secs
   </p>
 </div>
