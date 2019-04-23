@@ -13,6 +13,3 @@ gem 'curb'
 gem 'puma'
 gem 'foreman'
 
-group(:development) do
-  gem 'shotgun'
-end
