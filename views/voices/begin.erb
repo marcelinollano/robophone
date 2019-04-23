@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Response>
   <Say voice="Polly.Conchita" language="<%= @language ||= ENV['DEFAULT_LANGUAGE'] %>"><%= @text %></Say>
+  <Record maxLength="<%= @record_time ||= ENV['RECORD_TIME'] %>" trim="trim-silence" />
   <Hangup />
 </Response>
