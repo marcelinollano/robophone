@@ -47,7 +47,6 @@ def update_call(request, client, call)
   call.update({
     :duration   => current_call.duration,
     :recording  => recording ||= nil,
-    :transcript => nil,
     :status     => current_call.status
   })
 
