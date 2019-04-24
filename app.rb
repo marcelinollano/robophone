@@ -199,7 +199,7 @@ class App < Sinatra::Base
       @language    = params[:language]
       @record_time = params[:record_time]
       content_type('text/xml')
-      erb(:'twiml/intro', :layout => false)
+      erb(:"twiml/#{params[:template]}", :layout => false)
     rescue
       bad_request
     end

@@ -19,6 +19,7 @@ end.parse!
 
 require './db.rb'
 @story = Story.first(:id => opts[:id])
+@text  = @story.text
 
 # Methods
 
@@ -49,16 +50,15 @@ def report(request, client, call)
   ping(@story.id)
 end
 
-@story.calls.each do |call|
-
-  # TODO: Skip opt-out here (next)
+@story.calls.each_with_index do |call, i|
+  next if call.contact.rings == 0
 
   url = Addressable::URI.new
   url.query_values = {
-    :text        => CGI.escape(@story.text),
+    :text        => CGI.escape(@text),
     :language    => @story.language    ||= ENV['DEFAULT_LANGUAGE'],
     :record_time => @story.record_time ||= ENV['DEFAULT_RECORD_TIME'],
-    :template    => 'intro'
+    :template    => i+1 < @story.calls.size ? 'intro' : 'outro'
   }
   url = "#{ENV['APP_URL']}/voice.xml?#{url.query}"
 
@@ -85,11 +85,13 @@ end
   report(request, client, call)
 
   # TODO: Check opt-out here!
+
   rings = call.contact.rings
   rings = rings - 1 > 0 ? rings - 1 : 0
   call.contact.update(:rings => rings)
   ping(@story.id)
 
-  # TODO: Set the next text here
+  # TODO: Get the transcript
 
+  @text = call.transcript unless call.transcript.strip.empty?
 end
