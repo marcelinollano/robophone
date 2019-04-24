@@ -139,7 +139,7 @@ document.addEventListener(
       event.target.innerHTML = "Play";
       return;
     }
-    event.target.audio.currentTime = 5;
+    event.target.audio.currentTime = 6;
     event.target.audio.play();
     event.target.setAttribute("aria-pressed", "true");
     event.target.innerHTML = "Pause";
