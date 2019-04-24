@@ -202,12 +202,17 @@ form hr {
 .buttons {
   margin: 0;
   padding: 0;
+  height: 4rem;
 }
 
 .buttons li {
   display: inline-block;
   margin: 0 2rem 0 0;
   padding: 0;
+}
+
+.buttons li:last-child {
+  margin-right: 0;
 }
 
 form input[type="submit"] {
@@ -230,16 +235,18 @@ form input[type="submit"]:hover {
 
 .header {
   display: flex;
+  margin-bottom: 3rem;
 }
 
 .nav {
   display: inline-block;
   align-items: center;
   flex: 1;
-  margin-bottom: 3rem;
+  margin: 0;
 }
 
 .nav ul {
+  margin: 0;
   padding: 0;
 }
 
