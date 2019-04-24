@@ -26,7 +26,7 @@ end
 
 def query(request, client, call)
   current_call = client.calls.list.first {|c| c.sid == request.sid}
-  record.update(:status => current_call.status)
+  call.update(:status => current_call.status)
   ping(call.id)
   return(current_call)
 end
@@ -34,11 +34,13 @@ end
 def report(request, client, call)
   current_call = query(request, client, call)
   recordings = client.recordings.list(call_sid: current_call.sid)
-  recording  = client.recordings(recordings[0].sid).fetch
-  recording  = 'https://api.twilio.com' + recording.uri.sub!('.json', '.wav')
+  if recordings[0]
+    recording  = client.recordings(recordings[0].sid).fetch
+    recording  = 'https://api.twilio.com' + recording.uri.sub!('.json', '.wav')
+  end
   call.update({
     :duration =>  current_call.duration,
-    :recording => recording,
+    :recording => recording ||= nil,
     :status =>    current_call.status
   })
   ping(call.id)
