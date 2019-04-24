@@ -30,7 +30,7 @@ end
 def query(request, client, call)
   current_call = client.calls.list.first {|c| c.sid == request.sid}
   call.update(:status => current_call.status)
-  ping(call.id)
+  ping(@story.id)
   return(current_call)
 end
 
@@ -46,7 +46,7 @@ def report(request, client, call)
     :recording => recording ||= nil,
     :status =>    current_call.status
   })
-  ping(call.id)
+  ping(@story.id)
 end
 
 @story.calls.each do |call|
@@ -78,7 +78,7 @@ end
 
   loop do
     current_call = query(request, client, call)
-    ping(call.id)
+    ping(@story.id)
     break if (current_call.status == 'completed')
   end
 
@@ -88,7 +88,7 @@ end
   rings = call.contact.rings
   rings = rings - 1 > 0 ? rings - 1 : 0
   call.contact.update(:rings => rings)
-  ping(call.id)
+  ping(@story.id)
 
   # TODO: Set the next text here
 
