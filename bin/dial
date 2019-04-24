@@ -49,6 +49,9 @@ end
 story = Story.first(:id => opts[:id])
 
 story.calls.each do |call|
+
+  # TODO: Skip opt-out here (next)
+
   url = Addressable::URI.new
   url.query_values = {
     :text        => CGI.escape(story.text),
@@ -81,4 +84,6 @@ story.calls.each do |call|
   rings = rings - 1 > 0 ? rings - 1 : 0
   call.contact.update(:rings => rings)
   ping(call.id)
+
+  # TODO: Set the next text here
 end
