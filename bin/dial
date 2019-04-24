@@ -60,18 +60,16 @@ end
 
   url = Addressable::URI.new
   url.query_values = {
-    :token       => ENV['APP_TOKEN'],
-    :call_id     => call.id,
-    :text        => CGI.escape(@text),
-    :language    => @story.language    ||= ENV['DEFAULT_LANGUAGE'],
-    :record_time => @story.record_time ||= ENV['DEFAULT_RECORD_TIME'],
-    :template    => i+1 < @story.calls.size ? 'intro' : 'outro'
+    :text     => CGI.escape(@text),
+    :language => @story.language    ||= ENV['DEFAULT_LANGUAGE'],
+    :timeout  => @story.record_time ||= ENV['DEFAULT_RECORD_TIME'],
+    :template => i+1 < @story.calls.size ? 'intro' : 'outro'
   }
-  url = "#{ENV['APP_URL']}/call.xml?#{url.query}"
+  url = "#{ENV['APP_URL']}/twiml/#{call.id}/call.xml?#{url.query}"
 
   params = {
     :record => true,
-    :url => url,
+    :url    => url,
     :from   => @story.phone,
     :to     => call.contact.phone,
     :method => 'GET'

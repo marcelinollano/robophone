@@ -3,5 +3,5 @@
   <Say voice="Polly.Conchita" language="<%= @language ||= ENV['DEFAULT_LANGUAGE'] %>">Continua la historia</Say>
   <Say voice="Polly.Conchita" language="<%= @language ||= ENV['DEFAULT_LANGUAGE'] %>"><%= @text %></Say>
   <Play><%= ENV['APP_URL'] %>/beep.mp3</Play>
-  <Gather action="<%= ENV['APP_URL'] %>/hangup.xml?token=<%= ENV['APP_TOKEN'] %>&call_id=<%= @call_id %>" language="<%= @language ||= ENV['DEFAULT_LANGUAGE'] %>" timeout="<%= @record_time %>" input="speech" method="GET" />
+  <Gather action="<%= ENV['APP_URL'] %>/twiml/<%= @id %>/hangup.xml" language="<%= @language ||= ENV['DEFAULT_LANGUAGE'] %>" timeout="<%= @timeout %>" input="speech" method="GET" />
 </Response>

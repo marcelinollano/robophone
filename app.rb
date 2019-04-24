@@ -205,13 +205,12 @@ class App < Sinatra::Base
 
   # Twiml
 
-  get('/call.xml') do
-    auth_token!(params[:token])
+  get('/twiml/:id/call.xml') do
     begin
-      @call_id     = params[:call_id]
-      @text        = CGI.unescape(params[:text])
-      @language    = params[:language]
-      @record_time = params[:record_time]
+      @id       = params[:id]
+      @text     = CGI.unescape(params[:text])
+      @language = params[:language]
+      @timeout  = params[:timeout]
       content_type('text/xml')
       erb(:"twiml/#{params[:template]}", :layout => false)
     rescue
@@ -219,10 +218,9 @@ class App < Sinatra::Base
     end
   end
 
-  get('/hangup.xml') do
-    auth_token!(params[:token])
+  get('/twiml/:id/hangup.xml') do
     begin
-      call = Call.first(:id => params[:call_id])
+      call = Call.first(:id => params[:id])
       call.update(:transcript => response.body.to_s)
       content_type('text/xml')
       erb(:'twiml/hangup', :layout => false)
