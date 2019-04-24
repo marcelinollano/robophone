@@ -97,5 +97,5 @@ end
   call.contact.update(:rings => rings)
   ping(@story.id)
 
-  @text = call.transcript if call.transcript && !call.transcript.strip.empty?
+  @text = call.transcript if call.transcript
 end
