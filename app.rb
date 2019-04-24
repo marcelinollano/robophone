@@ -205,8 +205,10 @@ class App < Sinatra::Base
 
   # Twiml
 
-  get('/voice.xml') do
+  get('/call.xml') do
+    auth_token!(params[:token])
     begin
+      @call_id     = params[:call_id]
       @text        = CGI.unescape(params[:text])
       @language    = params[:language]
       @record_time = params[:record_time]
@@ -218,8 +220,15 @@ class App < Sinatra::Base
   end
 
   get('/hangup.xml') do
-    content_type('text/xml')
-    erb(:'twiml/hangup', :layout => false)
+    auth_token!(params[:token])
+    begin
+      call = Call.first(:id => params[:call_id])
+      call.update(:transcript => response.body.to_s)
+      content_type('text/xml')
+      erb(:'twiml/hangup', :layout => false)
+    rescue
+      bad_request
+    end
   end
 
   # Root

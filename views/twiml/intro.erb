@@ -2,5 +2,10 @@
 <Response>
   <Say voice="Polly.Conchita" language="<%= @language ||= ENV['DEFAULT_LANGUAGE'] %>">Continua la historia</Say>
   <Say voice="Polly.Conchita" language="<%= @language ||= ENV['DEFAULT_LANGUAGE'] %>"><%= @text %></Say>
-  <Record action="<%= ENV['APP_URL'] %>/hangup.xml" method="get" maxLength="<%= @record_time ||= ENV['RECORD_TIME'] %>" transcribe="true" trim="trim-silence" />
+  <Play><%= ENV['APP_URL'] %>/beep.mp3</Play>
+  <Gather action="<%= ENV['APP_URL'] %>/hangup.xml?token=<%= ENV['APP_TOKEN'] %>&call_id=<%= @call_id %>"
+          language="<%= @language ||= ENV['DEFAULT_LANGUAGE'] %>"
+          timeout="<%= @record_time %>"
+          input="speech"
+          method="GET" />
 </Response>

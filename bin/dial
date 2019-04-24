@@ -44,16 +44,10 @@ def update_call(request, client, call)
     recording  = 'https://api.twilio.com' + recording.uri.sub!('.json', '.wav')
   end
 
-  transcriptions = client.transcriptions.list(call_sid: current_call.sid)
-  if transcriptions[0]
-    transcription = client.transcriptions(transcriptions[0].sid).fetch
-    transcription = 'https://api.twilio.com' + transcription.uri.sub!('.json', '.txt')
-  end
-
   call.update({
     :duration   => current_call.duration,
     :recording  => recording ||= nil,
-    :transcript => transcription ||= nil,
+    :transcript => nil,
     :status     => current_call.status
   })
 
@@ -66,14 +60,17 @@ end
 
   url = Addressable::URI.new
   url.query_values = {
+    :token       => ENV['APP_TOKEN'],
+    :call_id     => call.id,
     :text        => CGI.escape(@text),
     :language    => @story.language    ||= ENV['DEFAULT_LANGUAGE'],
     :record_time => @story.record_time ||= ENV['DEFAULT_RECORD_TIME'],
     :template    => i+1 < @story.calls.size ? 'intro' : 'outro'
   }
-  url = "#{ENV['APP_URL']}/voice.xml?#{url.query}"
+  url = "#{ENV['APP_URL']}/call.xml?#{url.query}"
 
   params = {
+    :record => true,
     :url => url,
     :from   => @story.phone,
     :to     => call.contact.phone,
