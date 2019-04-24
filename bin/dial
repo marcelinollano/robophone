@@ -35,18 +35,22 @@ def query(request, client, call)
   return(current_call)
 end
 
-def report(request, client, call)
+def update_call(request, client, call)
   current_call = query(request, client, call)
+
   recordings = client.recordings.list(call_sid: current_call.sid)
   if recordings[0]
     recording  = client.recordings(recordings[0].sid).fetch
     recording  = 'https://api.twilio.com' + recording.uri.sub!('.json', '.wav')
   end
+
   call.update({
-    :duration =>  current_call.duration,
-    :recording => recording ||= nil,
-    :status =>    current_call.status
+    :duration   => current_call.duration,
+    :recording  => recording ||= nil,
+    :transcript => nil,
+    :status     => current_call.status
   })
+
   ping(@story.id)
 end
 
@@ -82,7 +86,7 @@ end
     break if (current_call.status == 'completed')
   end
 
-  report(request, client, call)
+  update_call(request, client, call)
 
   # TODO: Check opt-out here!
 
