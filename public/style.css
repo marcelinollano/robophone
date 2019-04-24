@@ -273,7 +273,7 @@ form input[type="submit"]:hover {
   display: inline;
   margin: 0;
   padding: 0;
-  margin-right: 2rem;
+  margin-right: 1.5rem;
 }
 
 .actions li:last-child {
