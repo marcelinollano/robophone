@@ -41,7 +41,7 @@
               <option value="">Select contact…</option>
               <% for contact in @contacts %>
                 <option value="<%= contact.id %>" <%= "selected=selected" if contact.id == call.contact_id %>>
-                  📞 <%= contact.name %> (<%= contact.rings %>)
+                  <%= contact.name %> (<%= contact.phone[0...-6] << '******' %>) (<%= contact.rings %>)
                 </option>
               <% end %>
             </select>
@@ -58,7 +58,7 @@
             <option value="" selected="selected">Select contact…</option>
             <% for contact in @contacts %>
               <option value="<%= contact.id %>">
-                📞 <%= contact.name %> (<%= contact.rings %>)
+                <%= contact.name %> (<%= contact.phone[0...-6] << '******' %>) (<%= contact.rings %>)
               </option>
             <% end %>
           </select>

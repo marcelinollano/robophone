@@ -159,7 +159,7 @@ form .short {
 }
 
 form select {
-  font-size: 3rem;
+  font-size: 1.6rem;
   margin-right: 1.5rem;
 }
 
@@ -170,7 +170,7 @@ form .list {
 }
 
 form .list select {
-  font-size: 3rem;
+  font-size: 1.6rem;
   margin-right: 1.5rem;
   min-width: 50%;
 }
