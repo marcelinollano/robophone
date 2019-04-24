@@ -33,6 +33,7 @@ end
 
 DB.create_table?(:stories) do
   primary_key :id
+  String   :status
   String   :name
   String   :text
   String   :phone
@@ -51,7 +52,7 @@ class Story < Sequel::Model
 
   def validate
     super
-    validates_presence([:name, :text, :phone, :record_time, :language])
+    validates_presence([:status, :name, :text, :phone, :record_time, :language])
     validates_unique([:name, :text])
     if Phonelib.invalid_for_country?(self.phone, ENV['DEFAULT_LANGUAGE'][-2..-1])
       errors.add(:phone, "#{self.phone}")

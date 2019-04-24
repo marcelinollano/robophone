@@ -1,6 +1,12 @@
 <header class="header">
   <%= erb(:'nav') %>
-  <a href="/stories/<%= @story.id %>/dial" class="primary">Dial story</a>
+
+  <% unless @story.status == 'closed' %>
+    <ul class="buttons">
+      <li><a href="/stories/<%= @story.id %>/dial" class="primary">Dial story</a></li>
+      <li><a href="/stories/<%= @story.id %>/sms" class="secondary">Send story</a></li>
+    </ul>
+  <% end %>
 </header>
 
 <main class="main">
@@ -20,7 +26,9 @@
         <th>Duration</th>
         <th>Transcript</th>
         <th>Recording</th>
-        <th></th>
+        <% unless @story.status == 'closed' %>
+          <th></th>
+        <% end %>
       </tr>
       <% @calls.each_with_index do |call, i| %>
         <tr>
@@ -61,11 +69,13 @@
               n/a
             <% end %>
           </td>
-          <td>
-            <ul class="actions">
-              <li><a href="/call/<%= call.id %>" class="delete">Delete</a></li>
-            </ul>
-          </td>
+          <% unless @story.status == 'closed' %>
+            <td align="right">
+              <ul class="actions">
+                <li><a href="/call/<%= call.id %>" class="delete">Delete</a></li>
+              </ul>
+            </td>
+          <% end %>
         </tr>
       <% end %>
     </table>

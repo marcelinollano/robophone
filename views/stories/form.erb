@@ -1,4 +1,13 @@
 <div class="fields">
+  <label for="status">Status</label>
+  <p class="inputs">
+    <select name="status" id="status">
+      <option value="open" <%= "selected=seleted" if story.status == 'open' %>>Open</option>
+      <option value="closed" <%= "selected=seleted" if story.status == 'closed' %>>Closed</option>
+    </select>
+  </p>
+</div>
+<div class="fields">
   <label for="name">Name</label>
   <span class="inputs">
     <input name="name" type="text" id="name" value="<%= story.name %>">
@@ -76,6 +85,6 @@
 <div class="fields">
   <ul class="buttons">
     <li><input type="submit" value="Save story"></li>
-    <li><a href="<%= @from %>" class="secondary">Cancel</a></li>
+    <li><a href="<%= @from %>" class="cancel">Cancel</a></li>
   </ul>
 </div>

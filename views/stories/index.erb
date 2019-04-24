@@ -9,13 +9,15 @@
       <tr>
         <th>Name</th>
         <th>Beginning</th>
+        <th>Status</th>
         <th></th>
       </tr>
       <% for story in @stories %>
       <tr>
         <td><a href="/stories/<%= story.id %>"><%= story.name %></a></td>
         <td><%= story.text %></td>
-        <td>
+        <td><%= story.status.capitalize %></td>
+        <td align="right">
           <ul class="actions">
             <li><a href="/stories/<%= story.id %>/edit?from=/stories" class="edit">Edit</a></li>
             <li><a href="/stories/<%= story.id %>" class="delete">Delete</a></li>

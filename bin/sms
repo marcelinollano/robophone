@@ -1,0 +1,49 @@
+#!/usr/bin/env ruby
+
+require 'cgi'
+require 'optparse'
+require 'addressable/uri'
+require 'rubygems'
+require 'twilio-ruby'
+require 'sequel'
+require 'sqlite3'
+require 'phonelib'
+require 'curb'
+require 'dotenv'
+Dotenv.load
+
+opts = {}
+OptionParser.new do |opt|
+  opt.on('--id ID') { |o| opts[:id] = o }
+end.parse!
+
+require './db.rb'
+story = Story.first(:id => opts[:id])
+
+contacts    = Array.new
+transcripts = Array.new
+
+calls    = Call.where(:story_id => story.id).order(:order).all
+
+calls.each_with_index do |call, i|
+  if call.transcript
+    contacts    << call.contact.phone
+    transcripts << call.transcript
+  end
+end
+
+contacts    = contacts.uniq
+transcripts = transcripts.reject { |s| s.nil? || s.strip.empty? }
+
+if transcripts.length > 0
+  message = String.new
+  message << "#{story.name}: "
+  message << "#{story.text} / "
+  message <<  transcripts.join(' / ')
+  message << "."
+
+  puts "#{contacts} \n #{message}"
+
+  story.update({:status => 'closed'})
+  puts "Story was closed!"
+end

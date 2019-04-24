@@ -156,6 +156,17 @@ class App < Sinatra::Base
     end
   end
 
+  get('/stories/:id/sms') do
+    auth_basic!
+    begin
+      story = Story.first(:id => params[:id])
+      Thread.new { system(`./bin/sms --id "#{story.id}"`) }
+      redirect("/stories/#{params[:id]}")
+    rescue
+      bad_request
+    end
+  end
+
   put('/stories/:id') do
     auth_basic!
     begin
@@ -247,6 +258,7 @@ private
 
   def story_from(params)
     {
+      :status      => params[:status],
       :name        => params[:name],
       :text        => params[:text],
       :phone       => params[:phone],
