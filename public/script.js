@@ -23,6 +23,7 @@ const deleteResourceEvents = function(links) {
           if (res == "true") {
             const table = document.querySelectorAll("table")[0];
             if (table.querySelectorAll("tr").length == 2) {
+              document.querySelectorAll(".dial")[0].remove();
               table.remove();
             } else {
               link.closest("tr").remove();

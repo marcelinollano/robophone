@@ -156,16 +156,47 @@ class App < Sinatra::Base
     end
   end
 
-  get('/stories/:id/sms') do
+  get('/stories/:id/open') do
     auth_basic!
     begin
       story = Story.first(:id => params[:id])
-      Thread.new { system(`./bin/sms --id "#{story.id}"`) }
+      story.update({
+        :status => 'open',
+        :result => nil
+      })
       redirect("/stories/#{params[:id]}")
     rescue
       bad_request
     end
   end
+
+  get('/stories/:id/close') do
+    auth_basic!
+    # begin
+      story  = Story.first(:id => params[:id])
+      result = collect_result(story)
+      story.update({
+        :status => 'closed',
+        :result => result
+      })
+      redirect("/stories/#{params[:id]}")
+    # rescue
+    #   bad_request
+    # end
+  end
+
+  # This needs a Twilio phone number
+  #
+  # get('/stories/:id/sms') do
+  #   auth_basic!
+  #   begin
+  #     story = Story.first(:id => params[:id])
+  #     Thread.new { system(`./bin/sms --id "#{story.id}"`) }
+  #     redirect("/stories/#{params[:id]}")
+  #   rescue
+  #     bad_request
+  #   end
+  # end
 
   put('/stories/:id') do
     auth_basic!
@@ -302,6 +333,26 @@ private
           count = count + 1
         end
       end
+    end
+  end
+
+  def collect_result(story)
+    transcripts = Array.new
+    story.calls.each_with_index do |call, i|
+      transcripts << call.transcript if call.transcript
+    end
+    transcripts = transcripts.reject { |s| s.nil? || s.strip.empty? }
+
+    if transcripts.length > 0
+      result = String.new
+      result << "#{story.title}: "
+      result << "#{story.text} / "
+      result <<  transcripts.join(' / ')
+      result << "."
+      result = URI.encode(result)
+      return(result)
+    else
+      return(nil)
     end
   end
 

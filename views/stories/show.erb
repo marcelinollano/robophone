@@ -1,11 +1,16 @@
 <header class="header">
   <%= erb(:'nav') %>
 
-  <% unless @story.status == 'closed' %>
-    <ul class="buttons">
-      <li><a href="/stories/<%= @story.id %>/dial" class="primary">Dial story</a></li>
-    </ul>
-  <% end %>
+  <ul class="buttons">
+    <% if @story.status == 'open' && @story.calls.any? %>
+      <li><a href="/stories/<%= @story.id %>/dial" class="dial primary">Dial story</a></li>
+    <% end %>
+    <% if @story.status == 'open' %>
+      <li><a href="/stories/<%= @story.id %>/close" class="secondary">Close story</a></li>
+    <% else %>
+      <li><a href="/stories/<%= @story.id %>/open" class="secondary">Open story</a></li>
+    <% end %>
+  </ul>
 </header>
 
 <main class="main">
@@ -25,8 +30,12 @@
         <th>Duration</th>
         <th>Transcript</th>
         <th>Recording</th>
-        <% unless @story.status == 'closed' %>
+        <% if @story.status == 'open' %>
           <th></th>
+        <% else %>
+          <% if @story.result %>
+            <th></th>
+          <% end %>
         <% end %>
       </tr>
       <% @calls.each_with_index do |call, i| %>
@@ -35,7 +44,8 @@
             <%= i + 1 %>
           </td>
           <td>
-            📞 <a href="/contacts/<%= call.contact.id %>/edit?from=/stories/<%= @story.id %>">
+            📞
+            <a href="/contacts/<%= call.contact.id %>/edit?from=/stories/<%= @story.id %>">
               <%= call.contact.name %>
             </a>
             (<%= call.contact.rings %>)
@@ -68,12 +78,20 @@
               n/a
             <% end %>
           </td>
-          <% unless @story.status == 'closed' %>
+          <% if @story.status == 'open' %>
             <td align="right">
               <ul class="actions">
                 <li><a href="/call/<%= call.id %>" class="delete">Delete</a></li>
               </ul>
             </td>
+          <% else %>
+            <% if @story.result %>
+              <td align="right">
+                <ul class="actions">
+                  <li><a href="sms://<%= call.contact.phone %>&body=<%= @story.result %>">Send SMS</a></li>
+                </ul>
+              </td>
+            <% end %>
           <% end %>
         </tr>
       <% end %>

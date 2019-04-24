@@ -39,6 +39,7 @@ DB.create_table?(:stories) do
   String   :phone
   String   :language
   Integer  :timeout
+  String   :result
   DateTime :created_at
   DateTime :updated_at
   index    :id, :unique => true
