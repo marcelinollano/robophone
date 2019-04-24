@@ -24,26 +24,24 @@
       </tr>
       <% @calls.each_with_index do |call, i| %>
         <tr>
-          <td><%= i + 1 %></td>
           <td>
-            <% if call.contact %>
-              📞 <%= call.contact.name %> (<%= call.contact.rings %>)
-            <% else %>
-              💥 Random contact
-            <% end %>
+            <%= i + 1 %>
+          </td>
+          <td>
+            📞 <%= call.contact.name %> (<%= call.contact.rings %>)
           </td>
           <td>
             <% if call.status %>
-            <%= call.status.capitalize %>
+              <%= call.status.capitalize %>
             <% else %>
-            n/a
+              n/a
             <% end %>
           </td>
           <td>
             <% if call.duration %>
-            <%= Time.at(call.duration).utc.strftime("%M:%S") %>
+              <%= Time.at(call.duration).utc.strftime("%M:%S") %>
             <% else %>
-            n/a
+              n/a
             <% end %>
           </td>
           <td>
