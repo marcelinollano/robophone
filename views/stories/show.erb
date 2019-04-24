@@ -4,7 +4,7 @@
   <% unless @story.status == 'closed' %>
     <ul class="buttons">
       <li><a href="/stories/<%= @story.id %>/dial" class="primary">Dial story</a></li>
-      <li><a href="/stories/<%= @story.id %>/sms" class="secondary">Send story</a></li>
+      <!-- <li><a href="/stories/<%=# @story.id %>/sms" class="secondary">Send story</a></li> -->
     </ul>
   <% end %>
 </header>

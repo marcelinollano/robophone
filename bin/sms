@@ -48,12 +48,9 @@ if transcripts.length > 0
   )
 
   contacts.each do |contact|
-    from = story.phone
-    to   = contact.phone
-
     client.messages.create(
-      from: from,
-      to: to,
+      from: story.phone,
+      to:   contact,
       body: message
     )
   end
