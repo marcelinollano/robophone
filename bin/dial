@@ -68,7 +68,7 @@ end
   url.query_values = {
     :text     => CGI.escape(@text),
     :language => @story.language    ||= ENV['DEFAULT_LANGUAGE'],
-    :timeout  => @story.record_time ||= ENV['DEFAULT_RECORD_TIME'],
+    :timeout  => @story.timeout ||= ENV['DEFAULT_TIMEOUT'],
     :template => i+1 < @story.calls.size ? 'intro' : 'outro'
   }
   url = "#{ENV['APP_URL']}/twiml/#{call.id}/call.xml?#{url.query}"

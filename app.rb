@@ -271,7 +271,7 @@ private
       :name        => params[:name],
       :text        => params[:text],
       :phone       => params[:phone],
-      :record_time => params[:record_time],
+      :timeout => params[:timeout],
       :language    => params[:language]
     }
   end

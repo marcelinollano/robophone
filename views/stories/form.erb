@@ -26,9 +26,9 @@
   </span>
 </div>
 <div class="fields">
-  <label for="record_time">Record time</label>
+  <label for="timeout">Record time</label>
   <p class="inputs">
-    <input name="record_time" type="number" id="record_time" value="<%= story.record_time ||= ENV['DEFAULT_RECORD_TIME'] %>">
+    <input name="timeout" type="number" id="timeout" value="<%= story.timeout ||= ENV['DEFAULT_TIMEOUT'] %>">
     secs
   </p>
 </div>
