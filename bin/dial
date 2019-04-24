@@ -44,10 +44,16 @@ def update_call(request, client, call)
     recording  = 'https://api.twilio.com' + recording.uri.sub!('.json', '.wav')
   end
 
+  transcriptions = client.transcriptions.list(call_sid: current_call.sid)
+  if transcriptions[0]
+    transcription = client.transcriptions(transcriptions[0].sid).fetch
+    transcription = 'https://api.twilio.com' + transcription.uri.sub!('.json', '.txt')
+  end
+
   call.update({
     :duration   => current_call.duration,
     :recording  => recording ||= nil,
-    :transcript => nil,
+    :transcript => transcription ||= nil,
     :status     => current_call.status
   })
 
@@ -95,8 +101,6 @@ end
   rings = rings - 1 > 0 ? rings - 1 : 0
   call.contact.update(:rings => rings)
   ping(@story.id)
-
-  # TODO: Get the transcript
 
   @text = call.transcript unless call.transcript.strip.empty?
 end
