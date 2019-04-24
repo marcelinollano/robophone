@@ -2,5 +2,5 @@
 <Response>
   <Say voice="Polly.Conchita" language="<%= @language ||= ENV['DEFAULT_LANGUAGE'] %>">Termina la historia</Say>
   <Say voice="Polly.Conchita" language="<%= @language ||= ENV['DEFAULT_LANGUAGE'] %>"><%= @text %></Say>
-  <Record action="<%= ENV['APP_URL'] %>/hangup.xml" method="get" maxLength="<%= @record_time ||= ENV['RECORD_TIME'] %>" trim="trim-silence" />
+  <Record action="<%= ENV['APP_URL'] %>/hangup.xml" method="get" maxLength="<%= @record_time ||= ENV['RECORD_TIME'] %>" transcribe="true" trim="trim-silence" />
 </Response>
