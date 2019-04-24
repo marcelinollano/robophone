@@ -55,8 +55,14 @@ def update_call(request, client, call)
 end
 
 @story.calls.each_with_index do |call, i|
-  next if call.contact.rings == 0
-  next if call.transcript
+  if call.contact.rings == 0
+    next
+  end
+
+  if call.transcript
+    @text = call.transcript
+    next
+  end
 
   url = Addressable::URI.new
   url.query_values = {
