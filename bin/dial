@@ -27,7 +27,6 @@ end
 def query(request)
   call  = @client.calls.list.first {|call| call.sid == request.sid}
   @call.update(:status => call.status)
-  ping(@call.id)
   return(call)
 end
 
@@ -45,8 +44,8 @@ def report(request)
   ping(@call.id)
 end
 
-@story      = Story.first(:id => opts[:id])
-@call       = @story.calls.first
+@story = Story.first(:id => opts[:id])
+@call  = @story.calls.first
 
 url = Addressable::URI.new
 url.query_values = {
@@ -68,9 +67,14 @@ params = {
 @client = Twilio::REST::Client.new(ENV['TWILIO_ACCOUNT_SID'], ENV['TWILIO_AUTH_TOKEN'])
 request = @client.calls.create(params)
 
+ping(@call.id)
+
 loop do
   call = query(request)
+  ping(@call.id)
   break if (call.status == 'completed')
 end
+
+ping(@call.id)
 
 report(request)
