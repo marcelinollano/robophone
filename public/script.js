@@ -24,10 +24,6 @@ const deleteResourceEvents = function(links) {
             const table = document.querySelectorAll("table")[0];
             if (table.querySelectorAll("tr").length == 2) {
               table.remove();
-              const main = document.querySelectorAll("main")[0];
-              const p = document.createElement("P");
-              p.innerHTML = "Nothing to see here yet.";
-              main.appendChild(p);
             } else {
               link.closest("tr").remove();
             }
