@@ -1,3 +1,3 @@
 # Poetic robocall
 
-[![Here is a video](doc/demo.png)](https://youtu.be/vt5fpE0bzSY)
+[![Here is a video](doc/demo.png)](https://github.com/marcelinollano/robocall/raw/master/doc/demo.mp4)
