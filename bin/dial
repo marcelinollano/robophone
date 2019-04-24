@@ -12,58 +12,13 @@ require 'curb'
 require 'dotenv'
 Dotenv.load
 
-require './db.rb'
-
 opts = {}
 OptionParser.new do |opt|
   opt.on('--id ID') { |o| opts[:id] = o }
 end.parse!
 
-story = Story.first(:id => opts[:id])
-
-story.calls.each do |call|
-
-  # TODO: Skip opt-out here (next)
-
-  url = Addressable::URI.new
-  url.query_values = {
-    :text        => CGI.escape(story.text),
-    :language    => story.language    ||= ENV['DEFAULT_LANGUAGE'],
-    :record_time => story.record_time ||= ENV['DEFAULT_RECORD_TIME'],
-    :template    => 'intro'
-  }
-  url = "#{ENV['APP_URL']}/voice.xml?#{url.query}"
-
-  params = {
-    :url => url,
-    :from   => story.phone,
-    :to     => call.contact.phone,
-    :method => 'GET'
-  }
-
-  client = Twilio::REST::Client.new(
-    ENV['TWILIO_ACCOUNT_SID'],
-    ENV['TWILIO_AUTH_TOKEN']
-  )
-
-  request = client.calls.create(params)
-
-  loop do
-    current_call = query(request, client, call)
-    ping(call.id)
-    break if (current_call.status == 'completed')
-  end
-
-  report(request, client, call)
-
-  # TODO: Check opt-out here!
-  rings = call.contact.rings
-  rings = rings - 1 > 0 ? rings - 1 : 0
-  call.contact.update(:rings => rings)
-  ping(call.id)
-
-  # TODO: Set the next text here
-end
+require './db.rb'
+@story = Story.first(:id => opts[:id])
 
 # Methods
 
@@ -92,4 +47,49 @@ def report(request, client, call)
     :status =>    current_call.status
   })
   ping(call.id)
+end
+
+@story.calls.each do |call|
+
+  # TODO: Skip opt-out here (next)
+
+  url = Addressable::URI.new
+  url.query_values = {
+    :text        => CGI.escape(@story.text),
+    :language    => @story.language    ||= ENV['DEFAULT_LANGUAGE'],
+    :record_time => @story.record_time ||= ENV['DEFAULT_RECORD_TIME'],
+    :template    => 'intro'
+  }
+  url = "#{ENV['APP_URL']}/voice.xml?#{url.query}"
+
+  params = {
+    :url => url,
+    :from   => @story.phone,
+    :to     => call.contact.phone,
+    :method => 'GET'
+  }
+
+  client = Twilio::REST::Client.new(
+    ENV['TWILIO_ACCOUNT_SID'],
+    ENV['TWILIO_AUTH_TOKEN']
+  )
+
+  request = client.calls.create(params)
+
+  loop do
+    current_call = query(request, client, call)
+    ping(call.id)
+    break if (current_call.status == 'completed')
+  end
+
+  report(request, client, call)
+
+  # TODO: Check opt-out here!
+  rings = call.contact.rings
+  rings = rings - 1 > 0 ? rings - 1 : 0
+  call.contact.update(:rings => rings)
+  ping(call.id)
+
+  # TODO: Set the next text here
+
 end
