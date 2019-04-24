@@ -2,6 +2,7 @@
 
 require 'cgi'
 require 'optparse'
+require 'addressable/uri'
 require 'rubygems'
 require 'twilio-ruby'
 require 'sequel'
@@ -18,16 +19,16 @@ OptionParser.new do |opt|
   opt.on('--id ID') { |o| opts[:id] = o }
 end.parse!
 
+def ping(id)
+  params = 'message={"channel":"/stories/'+id.to_s+'","data": ""}'
+  Curl.post("#{ENV['APP_URL']}/faye", params)
+end
+
 def query(request)
   call  = @client.calls.list.first {|call| call.sid == request.sid}
   @call.update(:status => call.status)
   ping(@call.id)
   return(call)
-end
-
-def ping(id)
-  params = 'message={"channel":"/stories/'+id.to_s+'","data": ""}'
-  Curl.post("#{ENV['APP_URL']}/faye", params)
 end
 
 def report(request)
@@ -46,17 +47,24 @@ end
 
 @story      = Story.first(:id => opts[:id])
 @call       = @story.calls.first
-text        = CGI.escape(@story.text)
-language    = @story.language ||= ENV['DEFAULT_LANGUAGE']
-record_time = @story.record_time ||= ENV['DEFAULT_RECORD_TIME']
 
-url      = "#{ENV['APP_URL']}/voice.xml?token=#{ENV['APP_TOKEN']}&text=#{text}&language=#{language}&record_time=#{record_time}"
-params   = {
+url = Addressable::URI.new
+url.query_values = {
+  :text        => CGI.escape(@story.text),
+  :language    => @story.language ||= ENV['DEFAULT_LANGUAGE'],
+  :record_time => @story.record_time ||= ENV['DEFAULT_RECORD_TIME'],
+  :template    => 'intro'
+}
+
+url = "#{ENV['APP_URL']}/voice.xml?#{url.query}"
+
+params = {
   :url => url,
   :from   => @story.phone,
   :to     => @call.contact.phone,
   :method => 'GET'
 }
+
 @client = Twilio::REST::Client.new(ENV['TWILIO_ACCOUNT_SID'], ENV['TWILIO_AUTH_TOKEN'])
 request = @client.calls.create(params)
 

@@ -194,13 +194,12 @@ class App < Sinatra::Base
   # Twiml
 
   get('/voice.xml') do
-    auth_token!(params[:token])
     begin
       @text        = CGI.unescape(params[:text])
       @language    = params[:language]
       @record_time = params[:record_time]
       content_type('text/xml')
-      erb(:'twiml/begin', :layout => false)
+      erb(:'twiml/intro', :layout => false)
     rescue
       bad_request
     end
