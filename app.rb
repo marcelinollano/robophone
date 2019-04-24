@@ -43,6 +43,7 @@ class App < Sinatra::Base
   get('/contacts/:id/edit') do
     auth_basic!
     begin
+      @from    = params[:from]
       @contact = Contact.first(:id => params[:id])
       erb(:'contacts/edit')
     rescue
@@ -65,7 +66,7 @@ class App < Sinatra::Base
     begin
       contact = Contact.first(:id => params[:id])
       contact.update(contact_from(params))
-      redirect('/contacts')
+      redirect(params[:from])
     rescue
       bad_request
     end

@@ -28,7 +28,10 @@
             <%= i + 1 %>
           </td>
           <td>
-            📞 <%= call.contact.name %> (<%= call.contact.rings %>)
+            📞 <a href="/contacts/<%= call.contact.id %>/edit?from=/stories/<%= @story.id %>">
+              <%= call.contact.name %>
+            </a>
+            (<%= call.contact.rings %>)
           </td>
           <td>
             <% if call.status %>
