@@ -99,11 +99,11 @@ const deleteListItemEvent = function(link) {
     const listItem = link.closest(".list > li");
     const list = link.closest(".list");
     const listItems = list.querySelectorAll("ol > li");
+    const options = listItem.querySelectorAll("option");
+    options.forEach(function(option) {
+      option.selected = false;
+    });
     if (checkVisible(listItems) > 1) {
-      const options = listItem.querySelectorAll("option");
-      options.forEach(function(option) {
-        option.selected = false;
-      });
       listItem.style.display = "none";
     }
     e.preventDefault;
