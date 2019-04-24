@@ -37,7 +37,7 @@ transcripts = transcripts.reject { |s| s.nil? || s.strip.empty? }
 
 if transcripts.length > 0
   message = String.new
-  message << "#{story.name}: "
+  message << "#{story.title}: "
   message << "#{story.text} / "
   message <<  transcripts.join(' / ')
   message << "."

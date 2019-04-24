@@ -268,10 +268,10 @@ private
   def story_from(params)
     {
       :status      => params[:status],
-      :name        => params[:name],
+      :title       => params[:title],
       :text        => params[:text],
       :phone       => params[:phone],
-      :timeout => params[:timeout],
+      :timeout     => params[:timeout],
       :language    => params[:language]
     }
   end
