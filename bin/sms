@@ -42,8 +42,21 @@ if transcripts.length > 0
   message <<  transcripts.join(' / ')
   message << "."
 
-  puts "#{contacts} \n #{message}"
+  client = Twilio::REST::Client.new(
+    ENV['TWILIO_ACCOUNT_SID'],
+    ENV['TWILIO_AUTH_TOKEN']
+  )
+
+  contacts.each do |contact|
+    from = story.phone
+    to   = contact.phone
+
+    client.messages.create(
+      from: from,
+      to: to,
+      body: message
+    )
+  end
 
   story.update({:status => 'closed'})
-  puts "Story was closed!"
 end
