@@ -51,7 +51,12 @@ language    = @story.language ||= ENV['DEFAULT_LANGUAGE']
 record_time = @story.record_time ||= ENV['DEFAULT_RECORD_TIME']
 
 url      = "#{ENV['APP_URL']}/voice.xml?token=#{ENV['APP_TOKEN']}&text=#{text}&language=#{language}&record_time=#{record_time}"
-params   = { :url => url, :from => @story.phone, :to => @call.contact.phone }
+params   = {
+  :url => url,
+  :from   => @story.phone,
+  :to     => @call.contact.phone,
+  :method => 'GET'
+}
 @client = Twilio::REST::Client.new(ENV['TWILIO_ACCOUNT_SID'], ENV['TWILIO_AUTH_TOKEN'])
 request = @client.calls.create(params)
 

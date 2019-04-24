@@ -2,7 +2,5 @@
 <Response>
   <Play><%= ENV['APP_URL'] %>/intro.mp3</Play>
   <Say voice="Polly.Conchita" language="<%= @language ||= ENV['DEFAULT_LANGUAGE'] %>"><%= @text %></Say>
-  <Record maxLength="<%= @record_time ||= ENV['RECORD_TIME'] %>" trim="trim-silence" />
-  <Say voice="Polly.Conchita" language="<%= @language ||= ENV['DEFAULT_LANGUAGE'] %>">OK, gracias</Say>
-  <Hangup />
+  <Record action="<%= ENV['APP_URL'] %>/hangup.xml" method="get" maxLength="<%= @record_time ||= ENV['RECORD_TIME'] %>" trim="trim-silence" />
 </Response>
