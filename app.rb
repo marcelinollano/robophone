@@ -220,8 +220,10 @@ class App < Sinatra::Base
 
   get('/twiml/:id/hangup.xml') do
     begin
-      call = Call.first(:id => params[:id])
-      call.update(:transcript => params[:SpeechResult])
+      if params[:SpeechResult]
+        call = Call.first(:id => params[:id])
+        call.update(:transcript => params[:SpeechResult])
+      end
       content_type('text/xml')
       erb(:'twiml/hangup', :layout => false)
     rescue
