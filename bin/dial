@@ -68,6 +68,10 @@ story.calls.each do |call|
   client = Twilio::REST::Client.new(ENV['TWILIO_ACCOUNT_SID'], ENV['TWILIO_AUTH_TOKEN'])
   request = client.calls.create(params)
 
+  rings = call.contact.rings
+  rings = rings - 1 > 0 ? rings - 1 : 0
+  call.contact.update(:rings => rings)
+
   loop do
     current_call = query(request, client, call)
     ping(call.id)
