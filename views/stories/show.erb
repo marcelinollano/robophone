@@ -57,7 +57,7 @@
           </td>
           <td>
             <% if call.transcript %>
-              <%= call.transcript %>
+              <%= call.transcript.slice(0,1).capitalize + call.transcript.slice(1..-1) %>
             <% else %>
               n/a
             <% end %>
