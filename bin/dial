@@ -97,5 +97,6 @@ end
   call.contact.update(:rings => rings)
   ping(@story.id)
 
-  @text = call.transcript if call.transcript
+  transcript = Call.first(:id => call.id).transcript
+  @text = transcript if transcript
 end
