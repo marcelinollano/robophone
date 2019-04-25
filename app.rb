@@ -138,8 +138,8 @@ class App < Sinatra::Base
     begin
       @from     = params[:from]
       @contacts = Contact.all
-      @calls    = Call.where(:story_id => @story.id).order(:order)
       @story    = Story.first(:id => params[:id])
+      @calls    = Call.where(:story_id => params[:id]).order(:order)
       erb(:'stories/edit')
     rescue
       bad_request
