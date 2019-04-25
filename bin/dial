@@ -95,13 +95,16 @@ end
 
   update_call(request, client, call)
 
-  # TODO: Check opt-out here!
+  call = Call.first(:id => call.id)
+  @text = call.transcript if call.transcript
 
-  rings = call.contact.rings
-  rings = rings - 1 > 0 ? rings - 1 : 0
-  call.contact.update(:rings => rings)
+  if call.duration > 50 && call.transcript
+    rings = call.contact.rings
+    rings = rings - 1 > 0 ? rings - 1 : 0
+    call.contact.update(:rings => rings)
+  else
+    call.contact.update(:rings => 0)
+  end
+
   ping(@story.id)
-
-  transcript = Call.first(:id => call.id).transcript
-  @text = transcript if transcript
 end
