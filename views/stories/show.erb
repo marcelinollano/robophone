@@ -49,15 +49,17 @@
       </table>
     <% else %>
       <table>
-        <tr>
-          <th width="2%">No</th>
-          <th width="20%">Name</th>
-          <th width="10%">Status</th>
-          <th width="46%">Transcript</th>
-          <th width="4%">Duration</th>
-          <th width="4%">Recording</th>
-          <% if @story.result %><th width="14%"></th><% end %>
-        </tr>
+        <% if @calls.exclude(transcript: nil).all.any? %>
+          <tr>
+            <th width="2%">No</th>
+            <th width="20%">Name</th>
+            <th width="10%">Status</th>
+            <th width="46%">Transcript</th>
+            <th width="4%">Duration</th>
+            <th width="4%">Recording</th>
+            <% if @story.result %><th width="14%"></th><% end %>
+          </tr>
+        <% end %>
         <% @calls.each_with_index do |call, i| %>
           <% if call.transcript %>
             <tr>
