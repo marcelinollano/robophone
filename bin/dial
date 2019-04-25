@@ -92,6 +92,7 @@ end
     ping(@story.id)
     break if (current_call.status == 'completed')
     break if (current_call.status == 'failed')
+    break if (current_call.status == 'no-answer')
   end
 
   update_call(request, client, call)
