@@ -101,11 +101,9 @@ end
   call = Call.first(:id => call.id)
   @text = call.transcript if call.transcript
 
-  if call.duration > 50 && call.transcript
-    rings = call.contact.rings
-    rings = rings - 1 > 0 ? rings - 1 : 0
-    call.contact.update(:rings => rings)
-  end
+  rings = call.contact.rings
+  rings = rings - 1 > 0 ? rings - 1 : 0
+  call.contact.update(:rings => rings)
 
   if call.duration > 50 && !call.transcript
     call.contact.update(:rings => 0)
