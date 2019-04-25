@@ -156,12 +156,12 @@ class App < Sinatra::Base
     end
   end
 
-  get('/stories/:id/continue') do
+  get('/stories/:id/continued') do
     auth_basic!
     begin
       story = Story.first(:id => params[:id])
       story.update({
-        :status => 'continue',
+        :status => 'continued',
         :result => nil
       })
       redirect("/stories/#{params[:id]}")
@@ -170,13 +170,13 @@ class App < Sinatra::Base
     end
   end
 
-  get('/stories/:id/finish') do
+  get('/stories/:id/finished') do
     auth_basic!
     begin
       story  = Story.first(:id => params[:id])
       result = collect_result(story)
       story.update({
-        :status => 'finish',
+        :status => 'finished',
         :result => result
       })
       redirect("/stories/#{params[:id]}")

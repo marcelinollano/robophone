@@ -42,14 +42,16 @@ deleteResourceEvents(document.querySelectorAll("table .delete"));
 // Mask phones
 
 const maskPhones = function(phones) {
-  for (let i = 0; i < phones.length; i++) {
-    text = phones[i].innerHTML;
-    text = text.replace(/\d{6}$/, "******");
-    phones[i].innerHTML = text;
-  }
+  phones.forEach(function(phone) {
+    console.log(phone.innerHTML);
+    text = phone.innerHTML;
+    text = text.substring(0, text.length - 6) + "******";
+    // text = text.replace(/\d{6}/, "******");
+    phone.innerHTML = text;
+  });
 };
 
-maskPhones(document.getElementsByClassName("phone"));
+maskPhones(document.querySelectorAll(".phone"));
 
 // Add list items
 
@@ -139,7 +141,7 @@ document.addEventListener(
       event.target.innerHTML = "Play";
       return;
     }
-    event.target.audio.currentTime = 55;
+    // event.target.audio.currentTime = 74;
     event.target.audio.play();
     event.target.setAttribute("aria-pressed", "true");
     event.target.innerHTML = "Pause";

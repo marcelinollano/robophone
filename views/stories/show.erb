@@ -2,14 +2,14 @@
   <%= erb(:'nav') %>
 
   <ul class="buttons">
-    <% if @story.status == 'continue' && @story.calls.any? %>
+    <% if @story.status == 'continued' && @story.calls.any? %>
       <li><a href="/stories/<%= @story.id %>/dial" class="dial primary">Dial story</a></li>
     <% end %>
     <li><a href="/stories/<%= @story.id %>/edit?from=/stories/<%= @story.id %>" class="secondary">Edit</a></li>
-    <% if @story.status == 'continue' %>
-      <li><a href="/stories/<%= @story.id %>/finish" class="secondary">Finish</a></li>
+    <% if @story.status == 'continued' %>
+      <li><a href="/stories/<%= @story.id %>/finished" class="secondary">Finished</a></li>
     <% else %>
-      <li><a href="/stories/<%= @story.id %>/continue" class="secondary">Continue</a></li>
+      <li><a href="/stories/<%= @story.id %>/continued" class="secondary">Continued</a></li>
     <% end %>
   </ul>
 </header>
@@ -24,17 +24,17 @@
   <% if @calls.any? %>
     <table>
       <tr>
-        <th>No</th>
-        <th>Name</th>
-        <th>Status</th>
-        <th>Duration</th>
-        <th>Transcript</th>
-        <th>Recording</th>
-        <% if @story.status == 'continue' %>
-          <th></th>
+        <th width="2%">No</th>
+        <th width="22%">Name</th>
+        <th width="8%">Status</th>
+        <th width="8%">Duration</th>
+        <th width="52%">Transcript</th>
+        <th width="4%">Recording</th>
+        <% if @story.status == 'continued' %>
+          <th width="4%"></th>
         <% else %>
           <% if @story.result %>
-            <th></th>
+            <th width="4%"></th>
           <% end %>
         <% end %>
       </tr>
@@ -78,7 +78,7 @@
               n/a
             <% end %>
           </td>
-          <% if @story.status == 'continue' %>
+          <% if @story.status == 'continued' %>
             <td align="right">
               <ul class="actions">
                 <li><a href="/call/<%= call.id %>" class="delete">Delete</a></li>
