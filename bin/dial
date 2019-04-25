@@ -105,7 +105,7 @@ end
   rings = rings - 1 > 0 ? rings - 1 : 0
   call.contact.update(:rings => rings)
 
-  if call.duration > 50 && !call.transcript
+  if call.duration > 30 && !call.transcript
     call.contact.update(:rings => 0)
   end
 
