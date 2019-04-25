@@ -27,8 +27,8 @@
         <th width="2%">No</th>
         <th width="22%">Name</th>
         <th width="8%">Status</th>
-        <th width="8%">Duration</th>
         <th width="52%">Transcript</th>
+        <th width="8%">Duration</th>
         <th width="4%">Recording</th>
         <% if @story.status == 'continued' %>
           <th width="4%"></th>
@@ -58,15 +58,15 @@
             <% end %>
           </td>
           <td>
-            <% if call.duration %>
-              <%= Time.at(call.duration).utc.strftime("%M:%S") %>
+            <% if call.transcript %>
+              <%= call.transcript.slice(0,1).capitalize + call.transcript.slice(1..-1) %>
             <% else %>
               n/a
             <% end %>
           </td>
           <td>
-            <% if call.transcript %>
-              <%= call.transcript.slice(0,1).capitalize + call.transcript.slice(1..-1) %>
+            <% if call.duration %>
+              <%= Time.at(call.duration).utc.strftime("%M:%S") %>
             <% else %>
               n/a
             <% end %>
