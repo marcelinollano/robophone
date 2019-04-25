@@ -111,3 +111,5 @@ end
 
   ping(@story.id)
 end
+
+ping(@story.id)
