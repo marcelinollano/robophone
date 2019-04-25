@@ -66,9 +66,11 @@
           <select name="contacts_ids[]">
             <option value="" selected="selected">Select contact…</option>
             <% for contact in @contacts %>
-              <option value="<%= contact.id %>">
-                <%= contact.name %> (<%= contact.phone[0...-6] << '******' %>) (<%= contact.rings %>)
-              </option>
+              <% if contact.rings > 0 %>
+                <option value="<%= contact.id %>">
+                  <%= contact.name %> (<%= contact.phone[0...-6] << '******' %>) (<%= contact.rings %>)
+                </option>
+              <% end %>
             <% end %>
           </select>
           <input name="calls_ids[]" type="hidden" value="">
