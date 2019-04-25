@@ -23,7 +23,7 @@ class App < Sinatra::Base
     auth_basic!
     begin
       @contact  = Contact.new
-      @contacts = Contact.all
+      @contacts = Contact.order(:name).all
       erb(:'contacts/index')
     rescue
       bad_request
@@ -91,7 +91,7 @@ class App < Sinatra::Base
     auth_basic!
     begin
       @story = Story.new
-      @stories = Story.all
+      @stories = Story.order(Sequel.desc(:updated_at)).all
       erb(:'stories/index')
     rescue
       bad_request
