@@ -55,5 +55,5 @@ if transcripts.length > 0
     )
   end
 
-  story.update({:status => 'closed'})
+  story.update({:status => 'finish'})
 end

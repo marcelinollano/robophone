@@ -2,13 +2,13 @@
   <%= erb(:'nav') %>
 
   <ul class="buttons">
-    <% if @story.status == 'open' && @story.calls.any? %>
+    <% if @story.status == 'continue' && @story.calls.any? %>
       <li><a href="/stories/<%= @story.id %>/dial" class="dial primary">Dial story</a></li>
     <% end %>
-    <% if @story.status == 'open' %>
-      <li><a href="/stories/<%= @story.id %>/close" class="secondary">Close story</a></li>
+    <% if @story.status == 'continue' %>
+      <li><a href="/stories/<%= @story.id %>/finish" class="secondary">Finish story</a></li>
     <% else %>
-      <li><a href="/stories/<%= @story.id %>/open" class="secondary">Open story</a></li>
+      <li><a href="/stories/<%= @story.id %>/continue" class="secondary">Continue story</a></li>
     <% end %>
   </ul>
 </header>
@@ -30,7 +30,7 @@
         <th>Duration</th>
         <th>Transcript</th>
         <th>Recording</th>
-        <% if @story.status == 'open' %>
+        <% if @story.status == 'continue' %>
           <th></th>
         <% else %>
           <% if @story.result %>
@@ -78,7 +78,7 @@
               n/a
             <% end %>
           </td>
-          <% if @story.status == 'open' %>
+          <% if @story.status == 'continue' %>
             <td align="right">
               <ul class="actions">
                 <li><a href="/call/<%= call.id %>" class="delete">Delete</a></li>

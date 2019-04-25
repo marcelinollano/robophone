@@ -2,8 +2,8 @@
   <label for="status">Status</label>
   <p class="inputs">
     <select name="status" id="status">
-      <option value="open" <%= "selected=seleted" if story.status == 'open' %>>Open</option>
-      <option value="closed" <%= "selected=seleted" if story.status == 'closed' %>>Closed</option>
+      <option value="continue" <%= "selected=seleted" if story.status == 'continue' %>>Continue story</option>
+      <option value="finish" <%= "selected=seleted" if story.status == 'finish' %>>Finish story</option>
     </select>
   </p>
 </div>

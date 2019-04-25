@@ -156,12 +156,12 @@ class App < Sinatra::Base
     end
   end
 
-  get('/stories/:id/open') do
+  get('/stories/:id/continue') do
     auth_basic!
     begin
       story = Story.first(:id => params[:id])
       story.update({
-        :status => 'open',
+        :status => 'continue',
         :result => nil
       })
       redirect("/stories/#{params[:id]}")
@@ -170,19 +170,19 @@ class App < Sinatra::Base
     end
   end
 
-  get('/stories/:id/close') do
+  get('/stories/:id/finish') do
     auth_basic!
-    # begin
+    begin
       story  = Story.first(:id => params[:id])
       result = collect_result(story)
       story.update({
-        :status => 'closed',
+        :status => 'finish',
         :result => result
       })
       redirect("/stories/#{params[:id]}")
-    # rescue
-    #   bad_request
-    # end
+    rescue
+      bad_request
+    end
   end
 
   # This needs a Twilio phone number
