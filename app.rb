@@ -33,6 +33,7 @@ class App < Sinatra::Base
   get('/contacts/new') do
     auth_basic!
     begin
+      @from    = params[:from]
       @contact  = Contact.new
       erb(:'contacts/new')
     rescue
