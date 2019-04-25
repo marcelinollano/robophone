@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Response>
-  <Say voice="Polly.Conchita" language="<%= @language ||= ENV['DEFAULT_LANGUAGE'] %>">Termina la historia</Say>
+  <Play><%= ENV['APP_URL'] %>/audios/intro.mp3</Play>
+  <Play><%= ENV['APP_URL'] %>/audios/optout.mp3</Play>
+  <Play><%= ENV['APP_URL'] %>/audios/finishes.mp3</Play>
+  <Play><%= ENV['APP_URL'] %>/audios/ready.mp3</Play>
   <Say voice="Polly.Conchita" language="<%= @language ||= ENV['DEFAULT_LANGUAGE'] %>"><%= @text %></Say>
-  <Play><%= ENV['APP_URL'] %>/beep.mp3</Play>
+  <Play><%= ENV['APP_URL'] %>/audios/beep.mp3</Play>
   <Gather action="<%= ENV['APP_URL'] %>/twiml/<%= @id %>/hangup.xml" language="<%= @language ||= ENV['DEFAULT_LANGUAGE'] %>" timeout="<%= @timeout %>" input="speech" method="GET" />
 </Response>
