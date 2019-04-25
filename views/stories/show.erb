@@ -3,7 +3,7 @@
 
   <ul class="buttons">
     <% if @story.status == 'continued' && @story.calls.any? %>
-      <li><a href="/stories/<%= @story.id %>/dial" class="dial primary">Dial story</a></li>
+      <li><a href="/stories/<%= @story.id %>/dial" class="dial primary">Dial</a></li>
     <% end %>
     <li><a href="/stories/<%= @story.id %>/edit?from=/stories/<%= @story.id %>" class="secondary">Edit</a></li>
     <% if @story.status == 'continued' %>

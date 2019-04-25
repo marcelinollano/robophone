@@ -50,17 +50,19 @@ a.active {
 }
 
 a.primary {
-  display: inline-block;
   background-color: #1968e2;
-  border: none;
   border-radius: 4px;
+  border: none;
   color: #fff;
   cursor: pointer;
+  display: inline-block;
   font-size: 1.6rem;
   font-weight: 500;
   height: 4rem;
   line-height: 4rem;
+  min-width: 6rem;
   padding: 0 2rem;
+  text-align: center;
   text-decoration: none;
   width: auto;
 }
@@ -70,17 +72,19 @@ a.primary:hover {
 }
 
 a.secondary {
-  color: #000;
-  display: inline-block;
   background-color: #eee;
-  border: none;
   border-radius: 4px;
+  border: none;
+  color: #000;
   cursor: pointer;
+  display: inline-block;
   font-size: 1.6rem;
   font-weight: 500;
   height: 4rem;
   line-height: 4rem;
+  min-width: 5rem;
   padding: 0 2rem;
+  text-align: center;
   text-decoration: none;
   width: auto;
 }
@@ -224,8 +228,10 @@ form input[type="submit"] {
   font-weight: 500;
   height: 4rem;
   line-height: 4rem;
-  padding: 0 2rem;
+  padding: 0;
   width: auto;
+  min-width: 14rem;
+  text-align: center;
 }
 
 form input[type="submit"]:hover {
