@@ -88,7 +88,7 @@
             <% if @story.result %>
               <td align="right">
                 <ul class="actions">
-                  <li><a href="sms://<%= call.contact.phone %>&body=<%= @story.result %>">Send SMS</a></li>
+                  <li><a href="sms:<%= call.contact.phone %>&body=<%= @story.result %>">Send SMS</a></li>
                 </ul>
               </td>
             <% end %>
