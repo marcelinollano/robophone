@@ -7,9 +7,9 @@
     <% end %>
     <li><a href="/stories/<%= @story.id %>/edit?from=/stories/<%= @story.id %>" class="secondary">Edit</a></li>
     <% if @story.status == 'continued' %>
-      <li><a href="/stories/<%= @story.id %>/finished" class="secondary">Finished</a></li>
+      <li><a href="/stories/<%= @story.id %>/finish" class="secondary">Finish</a></li>
     <% else %>
-      <li><a href="/stories/<%= @story.id %>/continued" class="secondary">Continued</a></li>
+      <li><a href="/stories/<%= @story.id %>/continue" class="secondary">Continue</a></li>
     <% end %>
   </ul>
 </header>

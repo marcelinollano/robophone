@@ -156,7 +156,7 @@ class App < Sinatra::Base
     end
   end
 
-  get('/stories/:id/continued') do
+  get('/stories/:id/continue') do
     auth_basic!
     begin
       story = Story.first(:id => params[:id])
@@ -170,7 +170,7 @@ class App < Sinatra::Base
     end
   end
 
-  get('/stories/:id/finished') do
+  get('/stories/:id/finish') do
     auth_basic!
     begin
       story  = Story.first(:id => params[:id])
