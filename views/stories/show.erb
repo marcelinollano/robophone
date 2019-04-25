@@ -25,16 +25,16 @@
     <table>
       <tr>
         <th width="2%">No</th>
-        <th width="22%">Name</th>
-        <th width="8%">Status</th>
-        <th width="52%">Transcript</th>
-        <th width="8%">Duration</th>
+        <th width="20%">Name</th>
+        <th width="10%">Status</th>
+        <th width="46%">Transcript</th>
+        <th width="4%">Duration</th>
         <th width="4%">Recording</th>
         <% if @story.status == 'continued' %>
-          <th width="4%"></th>
+          <th width="14%"></th>
         <% else %>
           <% if @story.result %>
-            <th width="4%"></th>
+            <th width="14%"></th>
           <% end %>
         <% end %>
       </tr>
