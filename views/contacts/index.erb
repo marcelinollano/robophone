@@ -15,10 +15,10 @@
       <% for contact in @contacts %>
       <tr>
         <td>
-          <%= contact.name %>
+          <a href="/contacts/<%= contact.id %>/edit?from=/contacts" class="edit"><%= contact.name %></a>
         </td>
         <td>
-          <a href="tel:<%= contact.phone %>" class="phone"><%= contact.phone %></a>
+          <span class="phone"><%= contact.phone %></span>
         </td>
         <td>
           <%= contact.rings %>
