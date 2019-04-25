@@ -8,7 +8,9 @@
   <link rel="stylesheet" href="/style.css">
 </head>
 <body>
-  <%= yield %>
+  <div class="content">
+    <%= yield %>
+  </div>
   <script src="/script.js" charset="utf-8"></script>
   <script>var envToken = '<%= ENV['APP_TOKEN'] %>';</script>
 </body>

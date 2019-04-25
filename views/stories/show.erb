@@ -13,11 +13,15 @@
 </header>
 
 <main class="main">
-  <h1>
-    <%= @story.title %>
-  </h1>
+  <div class="story">
+    <h1>
+      <%= @story.title %>
+    </h1>
 
-  <p><%= @story.text %></p>
+    <p>
+      <%= @story.text %>
+    </p>
+  </div>
 
   <% if @calls.any? %>
     <% if @story.status == 'continued' %>

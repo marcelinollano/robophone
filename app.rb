@@ -102,7 +102,7 @@ class App < Sinatra::Base
     auth_basic!
     begin
       @from     = params[:from]
-      @contacts = Contact.all
+      @contacts = Contact.order(:name).all
       @story    = Story.new
       @calls    = []
       erb(:'stories/new')
@@ -137,7 +137,7 @@ class App < Sinatra::Base
     auth_basic!
     begin
       @from     = params[:from]
-      @contacts = Contact.all
+      @contacts = Contact.order(:name).all
       @story    = Story.first(:id => params[:id])
       @calls    = Call.where(:story_id => params[:id]).order(:order)
       erb(:'stories/edit')
