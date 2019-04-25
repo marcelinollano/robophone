@@ -20,80 +20,55 @@
   <p><%= @story.text %></p>
 
   <% if @calls.any? %>
-    <table>
-      <tr>
-        <th width="2%">No</th>
-        <th width="20%">Name</th>
-        <th width="10%">Status</th>
-        <th width="46%">Transcript</th>
-        <th width="4%">Duration</th>
-        <th width="4%">Recording</th>
-        <% if @story.status == 'continued' %>
+    <% if @story.status == 'continued' %>
+      <table>
+        <tr>
+          <th width="2%">No</th>
+          <th width="20%">Name</th>
+          <th width="10%">Status</th>
+          <th width="46%">Transcript</th>
+          <th width="4%">Duration</th>
+          <th width="4%">Recording</th>
           <th width="14%"></th>
-        <% else %>
-          <% if @story.result %>
-            <th width="14%"></th>
+        </tr>
+        <% @calls.each_with_index do |call, i| %>
+          <tr>
+            <td><%= i + 1 %></td>
+            <td><a href="/contacts/<%= call.contact.id %>/edit?from=/stories/<%= @story.id %>"> <%= call.contact.name %></a> (<%= call.contact.rings %>)</td>
+            <td><% if call.status %><%= call.status.capitalize %><% else %>n/a<% end %></td>
+            <td><% if call.transcript %><%= call.transcript.slice(0,1).capitalize + call.transcript.slice(1..-1) %><% else %>n/a<% end %></td>
+            <td><% if call.duration %><%= Time.at(call.duration).utc.strftime("%M:%S") %><% else %>n/a<% end %></td>
+            <td><% if call.recording %><a href="<%= call.recording %>" class="recording" data-recording>Play</a><% else %>n/a<% end %></td>
+            <td align="right"><ul class="actions"><li><a href="/call/<%= call.id %>" class="delete">Delete</a></li></ul></td>
+          </tr>
+        <% end %>
+      </table>
+    <% else %>
+      <table>
+        <tr>
+          <th width="2%">No</th>
+          <th width="20%">Name</th>
+          <th width="10%">Status</th>
+          <th width="46%">Transcript</th>
+          <th width="4%">Duration</th>
+          <th width="4%">Recording</th>
+          <% if @story.result %><th width="14%"></th><% end %>
+        </tr>
+        <% @calls.each_with_index do |call, i| %>
+          <% if call.transcript %>
+            <tr>
+              <td><%= i + 1 %></td>
+              <td><a href="/contacts/<%= call.contact.id %>/edit?from=/stories/<%= @story.id %>"> <%= call.contact.name %></a> (<%= call.contact.rings %>)</td>
+              <td><% if call.status %><%= call.status.capitalize %><% else %>n/a<% end %></td>
+              <td><% if call.transcript %><%= call.transcript.slice(0,1).capitalize + call.transcript.slice(1..-1) %><% else %>n/a<% end %></td>
+              <td><% if call.duration %><%= Time.at(call.duration).utc.strftime("%M:%S") %><% else %>n/a<% end %></td>
+              <td><% if call.recording %><a href="<%= call.recording %>" class="recording" data-recording>Play</a><% else %>n/a<% end %></td>
+              <% if @story.result %><td align="right"><ul class="actions"><li><a href="sms:<%= call.contact.phone %>&body=<%= @story.result %>">Send SMS</a></li></ul></td><% end %>
+            </tr>
           <% end %>
         <% end %>
-      </tr>
-      <% @calls.each_with_index do |call, i| %>
-        <tr>
-          <td>
-            <%= i + 1 %>
-          </td>
-          <td>
-            📞
-            <a href="/contacts/<%= call.contact.id %>/edit?from=/stories/<%= @story.id %>">
-              <%= call.contact.name %>
-            </a>
-            (<%= call.contact.rings %>)
-          </td>
-          <td>
-            <% if call.status %>
-              <%= call.status.capitalize %>
-            <% else %>
-              n/a
-            <% end %>
-          </td>
-          <td>
-            <% if call.transcript %>
-              <%= call.transcript.slice(0,1).capitalize + call.transcript.slice(1..-1) %>
-            <% else %>
-              n/a
-            <% end %>
-          </td>
-          <td>
-            <% if call.duration %>
-              <%= Time.at(call.duration).utc.strftime("%M:%S") %>
-            <% else %>
-              n/a
-            <% end %>
-          </td>
-          <td>
-            <% if call.recording %>
-              <a href="<%= call.recording %>" class="recording" data-recording>Play</a>
-            <% else %>
-              n/a
-            <% end %>
-          </td>
-          <% if @story.status == 'continued' %>
-            <td align="right">
-              <ul class="actions">
-                <li><a href="/call/<%= call.id %>" class="delete">Delete</a></li>
-              </ul>
-            </td>
-          <% else %>
-            <% if @story.result %>
-              <td align="right">
-                <ul class="actions">
-                  <li><a href="sms:<%= call.contact.phone %>&body=<%= @story.result %>">Send SMS</a></li>
-                </ul>
-              </td>
-            <% end %>
-          <% end %>
-        </tr>
-      <% end %>
-    </table>
+      </table>
+    <% end %>
   <% end %>
 </main>
 
