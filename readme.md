@@ -71,8 +71,8 @@ To install on your machine run:
 
 Leaving aside the poetic nature of the project, it is basically an address book and a call scheduler with transcription. You could use this to automate calls or SMS messages.
 
-You will have to remove my audios from the `views/twiml` folder because those are very specific and you are not allowed to use them (it's my voice). Then, most of the logic is inside the scripts that perform the calls. Those are `/bin/dial` that chains the calls and feeds the previous transcript to the next call and `/bin/sms` that sends the resulting story to all participants.
+You will have to remove my audios from the `views/twiml` folder because those are very specific and you are not allowed to use them (it's my voice). Then, most of the logic is inside the scripts that perform the calls. Those are `/bin/dial` that chains the calls and feeds the previous transcript to the next call and `/bin/sms` that sends the resulting story to all participants. You can tweak all those files and find new uses for this.
 
-You can tweak all those files and find new uses for this. If you manage to do something cool with it, please let me know! Good luck!
+If you manage to do something cool with it, please let me know! Good luck!
 
 –– marce
