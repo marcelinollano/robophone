@@ -1,4 +1,4 @@
-## Robophone
+# Robophone
 
 _This was demoed live at [Poetry Slash II](https://poesia.javier.is), 27 Apr 2019. As part of [Libros Mutantes 2019](https://librosmutantes.com) at [La casa encendida](https://www.lacasaencendida.es) (Madrid)._
 
@@ -18,7 +18,7 @@ The project uses the [Twilio API](https://www.twilio.com/docs/usage/api) and [We
 
 <br>
 
-### Some stories (Spanish-only)
+## Some stories (Spanish-only)
 
 Here are some sample stories that we created using the project. The project supports both Spanish and English. It was presented live to an Spanish speaking audience so all these are in Spanish.
 
@@ -56,7 +56,7 @@ Here are some sample stories that we created using the project. The project supp
 >
 > **Person 2:** Nota de lo que iba a pedir en la cafetería
 
-### How to install
+## How to install
 
 To make this work you need [Ruby](https://ruby-lang.org), [SQLite](https://en.wikipedia.org/wiki/SQLite), a [Twilio account](https://twilio.com) and you also need to validate a phone number through their to make calls. For production deployment I included a [Dockerfile](Dockerfile).
 
@@ -67,7 +67,7 @@ To install on your machine run:
 3. `foreman start` to run the app
 4. Visit `http://localhost:5000`, voilà!
 
-### Other possible uses
+## Other possible uses
 
 Leaving aside the poetic nature of the project, it is basically an address book and a call scheduler with transcription. You could use this to automate calls or SMS messages.
 
