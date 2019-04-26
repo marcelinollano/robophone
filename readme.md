@@ -16,7 +16,7 @@ _This was presented live at [Poetry Slash II](https://poesia.javier.is), 27 Apr 
 
 Here are some sample stories that we created using this:
 
-##### El presidente y su tutú
+#### El presidente y su tutú
 
 > **Intro:** Justo después de que el presidente del gobierno se pusiera su tutú, llamó a su puerta un grupo de niños.
 >
@@ -24,7 +24,7 @@ Here are some sample stories that we created using this:
 >
 > **Person 2:** Sin embargo usted cuándo comenzó la representación el presidente tuvo un ataque de asma y fue incapaz de continuar bailando a terminar el día se fue a su habitación con un tutu en el armario y te juro no volver nunca más
 
-##### En la cafetería
+#### En la cafetería
 
 > **Intro:** Estabamos tomándonos un par de kombuchas cuando…
 >
