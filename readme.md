@@ -6,9 +6,9 @@ Like a party line but for making up stories with strangers. Using a short text a
 
 The project uses the [Twilio API](https://www.twilio.com/docs/usage/api) and [WebSockets](https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API) to send calls an receive transcripts. It's pretty cool to see the messages appear in the story page as people reply live.
 
-![Demo](doc/demo.gif)
+[![Demo](doc/demo.gif)](https://github.com/marcelinollano/robocall/raw/master/doc/demo.mp4)
 
-[▶️ Check the the video](https://github.com/marcelinollano/robocall/raw/master/doc/demo.mp4)
+[▶️ See how it works](https://github.com/marcelinollano/robocall/raw/master/doc/demo.mp4)
 
 _This was presented live at [Poetry Slash II](https://poesia.javier.is), 27 Apr 2019. An event of [Libros Mutantes 2019](https://librosmutantes.com) book fair at [La casa encendida](https://www.lacasaencendida.es) (Madrid)._
 
