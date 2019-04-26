@@ -89,6 +89,7 @@ end
 
   loop do
     current_call = query(request, client, call)
+    break if (current_call.status == 'busy')
     break if (current_call.status == 'completed')
     break if (current_call.status == 'no-answer')
     break if (current_call.status == 'failed')
