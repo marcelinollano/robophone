@@ -1,6 +1,6 @@
 ## Robophone
 
-_This was demoed live at [Poetry Slash II](https://poesia.javier.is), 27 Apr 2019. An event of [Libros Mutantes 2019](https://librosmutantes.com) book fair at [La casa encendida](https://www.lacasaencendida.es) (Madrid)._
+_This was demoed live at [Poetry Slash II](https://poesia.javier.is), 27 Apr 2019. As part of [Libros Mutantes 2019](https://librosmutantes.com) at [La casa encendida](https://www.lacasaencendida.es) (Madrid)._
 
 Like a party line but for making up stories with strangers. Using a short text as input calls a number of people using their transcribed reply as source for the next one. You end up with a story that is a little bit an exquisite cadaver and a little bit a broken telephone game, by telephone.
 
