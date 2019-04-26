@@ -8,7 +8,7 @@ Like a party line but for making up stories with strangers. Using a short text a
 
 The project uses the [Twilio API](https://www.twilio.com/docs/usage/api) and [WebSockets](https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API) to send calls an receive transcripts. It's pretty cool to see the messages appear in the story page as people reply live.
 
-[<img src="doc/demo.gif" width="300px">](https://github.com/marcelinollano/robocall/raw/master/doc/demo.mp4)
+[<img src="doc/demo.gif" width="90%">](https://github.com/marcelinollano/robocall/raw/master/doc/demo.mp4)
 
 [▶️ See how it works in this video](https://github.com/marcelinollano/robocall/raw/master/doc/demo.mp4)
 
