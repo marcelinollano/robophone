@@ -12,7 +12,7 @@ The project uses the [Twilio API](https://www.twilio.com/docs/usage/api) and [We
 
 <br>
 
-[![Demo]("doc/demo.gif")](https://github.com/marcelinollano/robocall/raw/master/doc/demo.mp4)
+[![Demo](doc/demo.gif)](https://github.com/marcelinollano/robocall/raw/master/doc/demo.mp4)
 
 <br>
 
