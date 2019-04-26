@@ -16,6 +16,24 @@ _This was presented live at [Poetry Slash II](https://poesia.javier.is), 27 Apr 
 
 Here are some sample stories that we created using this:
 
+#### El mago Carambola
+
+> **Intro:** Ana estaba deseando salir del trabajo. Justo cuando iba a salir por la puerta apareció su jefe. ¡Os traigo una sorpresa! ¡Os presento al mago Carambola!
+>
+> **Person 1:** El mago carambola iba vestido todo de verde excepto los zapatos que eran azules venía cargado con una caja enorme enorme creo que podría caer espera Ana le pregunta que es esa caja porque es tan grande que llevas ahí dentro
+>
+> **Person 2:** Llevo una caja con tus peores pesadillas las quieres ver
+>
+> **Person 3:** Le dijo mirándola a los ojos y han respondido no mi vida ya es una pesadilla en
+>
+> **Person 4:** Mis peores pesadillas fueron presentadas en el debate de anoche
+>
+> **Person 5:** Por cuatro papanatas que no hacía más que discutir de cosas sin sentido
+>
+> **Person 6:** Hubo una discusión muy grave en un bar cercano a Malasaña
+>
+> **Person 7:** Y cuanto antes cuando sacaron más cervezas
+
 #### El presidente y su tutú
 
 > **Intro:** Justo después de que el presidente del gobierno se pusiera su tutú, llamó a su puerta un grupo de niños.
